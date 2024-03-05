@@ -6,25 +6,44 @@
 	import * as Tabs from '$lib/components/ui/tabs';
 	import * as Card from '$lib/components/ui/card';
 	import DashboardData from '$lib/DashboardData.svelte';
-	$: isActive = 1;
+	import * as Drawer from '$lib/components/ui/drawer';
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
+	import { RangeCalendar } from '$lib/components/ui/range-calendar';
+	import { today, getLocalTimeZone } from '@internationalized/date';
+	import * as Popover from '$lib/components/ui/popover';
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
+	import { onMount } from 'svelte';
+	$: isActive = null;
 	$: isBActive = null;
+	// today || "thisweek" || "thismonth" || "calender"
+	let active_tab = 'today';
 	const weekDate = dayjs().subtract(1, 'week').toString().slice(5, 11);
 	const monthDate = dayjs().subtract(1, 'month').toString().slice(5, 11);
-	const todayDatas = data.todayData;
-	const weekDatas = data.weekData;
-	const monthDatas = data.monthData;
+	const todayIDatas = data.todayIData;
+	const weekIDatas = data.weekIData;
+	const monthIDatas = data.monthIData;
 	const dayTotalIncome = data.daytotalIncome;
 	const weekTotalIncome = data.weekTotalIncome;
 	const monthTotalIncome = data.monthTotalIncome;
+	const todayEDatas = data.todayEData;
+	const weekEDatas = data.weekEData;
+	const monthEDatas = data.monthEData;
+	const dayTotalExpense = data.dayTotalExpense;
+	const weekTotalExpense = data.weekTotalExpense;
+	const monthTotalExpense = data.monthTotalExpense;
 	const { session, supabase } = data;
 	const avatarUrl = session.user.user_metadata.avatar_url;
 	const name = session.user.user_metadata.full_name;
 	const date = new Date().toString().slice(0, 10);
-
-	const toggleContent = (button) => {
-		isActive = button;
-		isBActive = true;
+	let dateValues = {
+		start: today(getLocalTimeZone()),
+		end: today(getLocalTimeZone()).add({ days: 7 })
 	};
+
+	// console.log('d atsss', dateValues);
+
+	// $: console.log(dateValues.end);
 	const INRCurrency = (amount) => {
 		return amount.toLocaleString('en-IN', {
 			maximumFractionDigits: 2,
@@ -32,6 +51,69 @@
 			currency: 'INR'
 		});
 	};
+
+	let calenderIdata2;
+	let calenderTotalIncome2;
+	let calenderTotalExpense2;
+	let calenderEdata2;
+	async function getCalenderIncome() {
+		if (dateValues.start && dateValues.end) {
+			const start = dateValues.start.toLocaleString();
+			const end = dateValues.end.toLocaleString();
+			const response = await fetch('/dashboard', {
+				method: 'POST',
+				body: JSON.stringify({
+					start: start,
+					end: end,
+					userid: data.user_id,
+					dateValues: dateValues
+				}),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+			const { calenderIdata, calenderTotalIncome, calenderEdata, calenderTotalExpense } =
+				await response.json();
+			calenderEdata2 = calenderEdata;
+			calenderTotalExpense2 = calenderTotalExpense;
+			calenderIdata2 = calenderIdata;
+			calenderTotalIncome2 = calenderTotalIncome;
+			// {}=d
+			console.log(calenderIdata);
+			console.log(calenderTotalIncome);
+			// console.log(calenderTotalIncome);
+		}
+	}
+
+	let canRun = false;
+
+	$: {
+		if (canRun && dateValues.start) {
+			getCalenderIncome();
+		}
+	}
+
+	onMount(() => {
+		canRun = true;
+	});
+	// const searchParams = new URLSearchParams('start=null&end=null');
+
+	// function go() {
+	// 	if (dateValues.start && dateValues.end) {
+	// 		const start = new Date(dateValues.start.year, dateValues.start.month, dateValues.start.day);
+	// 		const end = new Date(dateValues.end.year, dateValues.end.month, dateValues.end.day);
+	// 		searchParams.set('start', start.toLocaleDateString());
+	// 		searchParams.set('end', end.toLocaleDateString());
+	// 		goto(`?${searchParams.toString()}`);
+	// 		console.log(start.toLocaleDateString());
+	// 		console.log(end.toLocaleDateString());
+	// 	}
+	// }
+	// $: go();
+	// $: docs = $page.url.searchParams.get('docs') === 'true';
+	// $: site = parseInt($page.url.searchParams.get('page')?.toString() || '0');
+	// $: console.log(dateValues);
+	// console.log(dateValues.start.day, dateValues.end.month);
 </script>
 
 <nav>
@@ -49,25 +131,44 @@
 
 <div class="filter-container m-auto mt-4 w-fit">
 	<Button
-		variant="secondary"
-		class={isBActive ? 'active' : ''}
-		on:click={() => toggleContent(1)}
+		variant={active_tab === 'today' ? 'default' : 'secondary'}
+		on:click={() => (active_tab = 'today')}
+		class="rounded-3xl"
 		autofocus>Today</Button
 	>
-	<Button variant="secondary" class={isBActive ? 'active' : ''} on:click={() => toggleContent(2)}
-		>This week</Button
+	<Button
+		variant={active_tab === 'thisweek' ? 'default' : 'secondary'}
+		class="rounded-3xl"
+		on:click={() => (active_tab = 'thisweek')}>This week</Button
 	>
-	<Button variant="secondary" class={isBActive ? 'active' : ''} on:click={() => toggleContent(3)}
-		>This month</Button
+	<Button
+		variant={active_tab === 'thismonth' ? 'default' : 'secondary'}
+		class="rounded-3xl"
+		on:click={() => (active_tab = 'thismonth')}>This month</Button
 	>
-	<Button variant="secondary" class="rounded-3xl  focus:bg-black focus:text-slate-200"
-		>Calender</Button
-	>
+	<Popover.Root openFocus>
+		<Popover.Trigger asChild let:builder>
+			<Button
+				variant={active_tab === 'calender' ? 'default' : 'secondary'}
+				class="rounded-3xl"
+				builders={[builder]}
+				on:click={() => (active_tab = 'calender')}>Calender</Button
+			>
+		</Popover.Trigger>
+		<Popover.Content class="w-auto p-0" align="start">
+			<RangeCalendar
+				on:click={getCalenderIncome}
+				bind:value={dateValues}
+				class="rounded-md border shadow"
+			/>
+			<!-- <Button on:click={getCalenderIncome}>Apply</Button> -->
+		</Popover.Content>
+	</Popover.Root>
 </div>
 
 <!-- <a href="/income"><button>add insert</button></a> -->
 
-<Tabs.Root value="Hisab" class="m-auto mt-4 w-[95vw]">
+<Tabs.Root value="Income" class="m-auto mt-4 w-[95vw]">
 	<Tabs.List class="grid h-fit w-full grid-cols-2 rounded-3xl ">
 		<Tabs.Trigger
 			value="Income"
@@ -88,41 +189,66 @@
 				>
 					Income so far
 					<span class=" text-3xl text-white">
-						{#if isActive == 1}
+						{#if active_tab === 'today'}
 							{INRCurrency(dayTotalIncome)}
-						{:else if isActive == 2}
+						{:else if active_tab === 'thisweek'}
 							{INRCurrency(weekTotalIncome)}
-						{:else if isActive == 3}
+						{:else if active_tab === 'thismonth'}
 							{INRCurrency(monthTotalIncome)}
+						{:else if active_tab === 'calender'}
+							{INRCurrency(calenderTotalIncome2 ? calenderTotalIncome2 : 0)}
 						{/if}
 					</span>
 				</div>
-				{#if isActive == 1}
-					<DashboardData Datas={todayDatas} />
+				{#if active_tab === 'today'}
+					<DashboardData Datas={todayIDatas} />
 				{/if}
 
-				{#if isActive == 2}
-					<DashboardData Datas={weekDatas} />
+				{#if active_tab == 'thisweek'}
+					<DashboardData Datas={weekIDatas} />
 				{/if}
-				{#if isActive == 3}
-					<DashboardData Datas={monthDatas} />
+				{#if active_tab == 'thismonth'}
+					<DashboardData Datas={monthIDatas} />
+				{/if}
+				{#if active_tab == 'calender'}
+					<DashboardData Datas={calenderIdata2} />
 				{/if}
 			</Card.Content>
 		</Card.Root>
 	</Tabs.Content>
 	<Tabs.Content value="Expense">
-		<Card.Root>
-			<Card.Content class="space-y-2">
-				<div class="space-y-1"></div>
-				<div class="space-y-1"></div>
+		<Card.Root class="">
+			<Card.Content class="p-0 py-6">
+				<div
+					class="expense-container text-s m-auto flex h-[12vh] w-[85vw] flex-col items-center justify-center rounded-lg bg-black text-slate-300"
+				>
+					Expense so far
+					<span class=" text-3xl text-white">
+						{#if active_tab === 'today'}
+							{INRCurrency(dayTotalExpense)}
+						{:else if active_tab == 'thisweek'}
+							{INRCurrency(weekTotalExpense)}
+						{:else if active_tab === 'thismonth'}
+							{INRCurrency(monthTotalExpense)}
+						{:else if active_tab === 'calender'}
+							{INRCurrency(calenderTotalExpense2 ? calenderTotalExpense2 : 0)}
+						{/if}
+					</span>
+				</div>
+				{#if active_tab === 'today'}
+					<DashboardData Datas={todayEDatas} />
+				{/if}
+
+				{#if active_tab == 'thisweek'}
+					<DashboardData Datas={weekEDatas} />
+				{/if}
+				{#if active_tab === 'thismonth'}
+					<DashboardData Datas={monthEDatas} />
+				{/if}
+				{#if active_tab === 'calender'}
+					<DashboardData Datas={calenderEdata2} />
+				{/if}
 			</Card.Content>
 		</Card.Root>
 	</Tabs.Content>
 </Tabs.Root>
-
-<style>
-	.active {
-		background-color: black;
-		color: rgb(226 232 240);
-	}
-</style>
