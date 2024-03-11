@@ -2,6 +2,7 @@
 	export let data;
 	import dayjs from 'dayjs';
 	import * as Avatar from '$lib/components/ui/avatar';
+
 	import { Button } from '$lib/components/ui/button';
 	import * as Tabs from '$lib/components/ui/tabs';
 	import * as Card from '$lib/components/ui/card';
@@ -14,6 +15,7 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
+	import Navbar from '$lib/Navbar.svelte';
 	$: isActive = null;
 	$: isBActive = null;
 	// today || "thisweek" || "thismonth" || "calender"
@@ -78,10 +80,6 @@
 			calenderTotalExpense2 = calenderTotalExpense;
 			calenderIdata2 = calenderIdata;
 			calenderTotalIncome2 = calenderTotalIncome;
-			// {}=d
-			console.log(calenderIdata);
-			console.log(calenderTotalIncome);
-			// console.log(calenderTotalIncome);
 		}
 	}
 
@@ -252,3 +250,11 @@
 		</Card.Root>
 	</Tabs.Content>
 </Tabs.Root>
+
+<Navbar />
+
+<style>
+	:global(body) {
+		background-color: rgb(248, 250, 252);
+	}
+</style>

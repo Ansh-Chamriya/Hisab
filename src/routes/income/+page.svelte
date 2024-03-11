@@ -1,8 +1,7 @@
 <script>
-	import { DateInput } from 'date-picker-svelte';
-	import { onMount } from 'svelte';
+	import dayjs from 'dayjs';
 	import toast, { Toaster } from 'svelte-french-toast';
-
+	import Navbar from '$lib/Navbar.svelte';
 	function handleClick() {
 		toast.success('Data Added Succesfully');
 	}
@@ -13,11 +12,11 @@
 	let articles = [
 		{
 			id: 1,
-			article_name: 'idli-khiru'
+			article_name: 'Idli-khiru'
 		},
 		{
 			id: 2,
-			article_name: 'chutney'
+			article_name: 'Chutney'
 		},
 		{
 			id: 3,
@@ -39,16 +38,15 @@
 			values = values.slice(0, values.length - 1);
 		}
 	};
-	let t1 = { name: 'harsh' };
 </script>
 
 <Toaster />
 
 <h1>Income Route</h1>
-<form method="POST" action="?/create">
+<form method="POST" action="?/create" on:submit={handleClick}>
 	<div class="">
-		<label for="date">Select Date</label>
-		<DateInput bind:value={date} />
+		<label for="date">Today's Date</label>
+		{dayjs(date).format('DD/MM/YYYY')}
 	</div>
 	{#each values as value, i}
 		<div class="">
@@ -85,6 +83,6 @@
 	{/each}
 	<button on:click|preventDefault={addMore}>Add More</button>
 	<button on:click|preventDefault={removeValues}>Remove</button>
-	<button on:click={handleClick}>Submit</button>
+	<button type="submit">Submit</button>
 </form>
-<a href="/expense"> <button>Add expense</button></a>
+<Navbar />

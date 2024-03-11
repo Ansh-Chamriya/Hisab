@@ -43,6 +43,7 @@
 		"dotenv": "^16.4.1",
 		"drizzle-orm": "^0.29.3",
 		"geist": "^1.2.2",
+		"lucide-svelte": "^0.350.0",
 		"postgres": "^3.4.3",
 		"supabase-ui-svelte": "^0.1.1",
 		"svelte-french-toast": "^1.2.0",

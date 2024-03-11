@@ -16,7 +16,7 @@
 				<Avatar.Fallback>{Data.article.slice(0, 1)}</Avatar.Fallback>
 			</Avatar.Root>
 			<h2 class="absolute left-14 top-1">{Data.article}</h2>
-			<h2 class="absolute right-5 top-1">{Data.qty}</h2>
+			<h2 class="absolute right-5 top-1">Qty: {Data.qty}</h2>
 			<span class="absolute bottom-2 right-5"
 				>{Data.price.toLocaleString('en-IN', {
 					maximumFractionDigits: 2,
@@ -25,6 +25,7 @@
 				})}
 			</span>
 			<span class="absolute bottom-2 left-14 text-sm text-slate-400">{Data.time}</span>
+			<span class="absolute bottom-2 left-[7.25rem] text-sm text-slate-400">{Data.date}</span>
 		</div>
 	{/each}
 </div>

@@ -1,6 +1,7 @@
 <script>
-	import { DateInput } from 'date-picker-svelte';
 	import toast, { Toaster } from 'svelte-french-toast';
+	import Navbar from '$lib/Navbar.svelte';
+	import dayjs from 'dayjs';
 	function handleClick() {
 		toast.success('Expense Added Succesfully');
 	}
@@ -17,10 +18,10 @@
 
 <Toaster />
 <h2>Expense Route</h2>
-<form method="POST" action="?/create">
+<form method="POST" action="?/create" on:submit={handleClick}>
 	<div class="">
-		<label for="date">Select Date</label>
-		<DateInput bind:value={date} />
+		<label for="date">Today's Date</label>
+		{dayjs(date).format('DD/MM/YYYY')}
 	</div>
 	<div class="">
 		<label for="article">Select Article</label>
@@ -48,5 +49,6 @@
 			<input type="text" name="qty" id="qty" />
 		{/if}
 	</div>
-	<button on:click={handleClick}>Submit</button>
+	<button type="submit">Submit</button>
 </form>
+<Navbar />
