@@ -6,13 +6,13 @@ export async function POST({ request }) {
 
 	const { data: calenderIdata, error } = await supabase
 		.from('income')
-		.select('article,price,qty,time')
+		.select('article,price,qty,time,date')
 		.eq('user_id', userid)
 		.gt('date', start)
 		.lte('date', end);
 	const { data: calenderEdata } = await supabase
 		.from('expense')
-		.select('article,price,qty,time')
+		.select('article,price,qty,time,date')
 		.eq('user_id', userid)
 		.gt('date', start)
 		.lte('date', end);

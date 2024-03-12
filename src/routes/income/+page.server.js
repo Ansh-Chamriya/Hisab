@@ -1,9 +1,10 @@
 import supabase from '$lib/supabaseClient';
 import { error } from '@sveltejs/kit';
+import dayjs from 'dayjs';
 export const actions = {
 	create: async (event) => {
 		const formData = await event.request.formData();
-		const date = new Date().toISOString();
+		const date = dayjs(new Date()).hour(12);
 		const time = new Date().toString().slice(16, 25);
 		const articles = {};
 		const price = formData.get('price');
@@ -17,7 +18,8 @@ export const actions = {
 		const udLength = Object.keys(userData).length / 3;
 		// console.log(formData);
 		// console.log(formData.getAll('name'));
-		console.log(udLength);
+		console.log(userData);
+		// console.log(udLength);
 
 		for (let i = 0; i < udLength; i++) {
 			const { data: profile } = await supabase

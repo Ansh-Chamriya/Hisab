@@ -1,9 +1,10 @@
 import supabase from '$lib/supabaseClient';
 import { error } from '@sveltejs/kit';
+import dayjs from 'dayjs';
 export const actions = {
 	create: async (event) => {
 		const formData = await event.request.formData();
-		const date = new Date().toISOString();
+		const date = dayjs(new Date()).hour(12);
 		const time = new Date().toString().slice(16, 25);
 		const article = formData.get('article');
 		const price = formData.get('price');

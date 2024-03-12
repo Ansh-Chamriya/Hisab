@@ -45,7 +45,7 @@
 		"geist": "^1.2.2",
 		"lucide-svelte": "^0.350.0",
 		"postgres": "^3.4.3",
-		"supabase-ui-svelte": "^0.1.1",
+		"shadcn-svelte": "^0.8.2",
 		"svelte-french-toast": "^1.2.0",
 		"svelte-radix": "^1.0.1",
 		"tailwind-merge": "^2.2.1",

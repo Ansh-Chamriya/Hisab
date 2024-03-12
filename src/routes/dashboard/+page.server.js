@@ -21,7 +21,7 @@ export const load = async (event) => {
 
 	const { data: todayIData } = await supabase
 		.from('income')
-		.select('article,price,qty,time')
+		.select('article,price,qty,time,date')
 		.eq('user_id', userSession.user.id)
 		.eq('date', new Date().toISOString());
 

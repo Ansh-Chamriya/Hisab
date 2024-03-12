@@ -2,6 +2,11 @@
 	import dayjs from 'dayjs';
 	import toast, { Toaster } from 'svelte-french-toast';
 	import Navbar from '$lib/Navbar.svelte';
+	import * as Select from '$lib/components/ui/select/index.js';
+	import { Item } from '$lib/components/ui/dropdown-menu';
+	import Button from '$lib/components/ui/button/button.svelte';
+	import Input from '$lib/components/ui/input/input.svelte';
+	import Label from '$lib/components/ui/label/label.svelte';
 	function handleClick() {
 		toast.success('Data Added Succesfully');
 	}
@@ -25,7 +30,7 @@
 	];
 	let values = [
 		{
-			article: '',
+			article: {},
 			price: '',
 			qty: ''
 		}
@@ -38,51 +43,103 @@
 			values = values.slice(0, values.length - 1);
 		}
 	};
+	// $: console.log(values[0]);
 </script>
 
 <Toaster />
+<div class="p-4">
+	<h1 class="mt-10 text-2xl font-bold">Add new income</h1>
+	<p class="text-pretty text-slate-400">
+		Enter the details of your sales to help you track your income
+	</p>
+	<form method="POST" action="?/create" on:submit={handleClick} class="mt-8">
+		<div class="my-4">
+			<Label for="date">Today's Date :</Label>
+			{dayjs(date).format('DD/MM/YYYY')}
+		</div>
+		{#each values as value, i}
+			<div class="my-4">
+				<Label for="article">Select Article</Label>
+				<!-- <select name="article{i}" id="article" bind:value={value.article}>
+					{#each articles as article}
+						<option value={article.article_name}>{article.article_name}</option>
+					{/each}
+				</select> -->
 
-<h1>Income Route</h1>
-<form method="POST" action="?/create" on:submit={handleClick}>
-	<div class="">
-		<label for="date">Today's Date</label>
-		{dayjs(date).format('DD/MM/YYYY')}
-	</div>
-	{#each values as value, i}
-		<div class="">
-			<label for="article">Select Article</label>
-			<select name="article{i}" id="article" bind:value={value.article}>
-				{#each articles as article}
-					<option value={article.article_name}>{article.article_name}</option>
-				{/each}
-			</select>
-		</div>
-		<div class="">
-			<label for="price">Price</label>
-			<select name="price{i}" id="price" bind:value={value.price}>
-				{#if values[i].article == 'idli-khiru'}
-					{#each idliPrices as idliPrice}
-						<option value={idliPrice}>{idliPrice}</option>
-					{/each}
-				{:else if values[i].article == 'chutney'}
-					{#each chutneyPrices as chutneyPrice}
-						<option value={chutneyPrice}>{chutneyPrice}</option>
-					{/each}
-				{:else if values[i].article == 'Menduvada-khiru'}
-					{#each MenduvadaPrices as MenduvadaPrice}
-						<option value={MenduvadaPrice}>{MenduvadaPrice}</option>
-					{/each}
-				{/if}
-			</select>
-		</div>
+				<Select.Root bind:selected={value.article}>
+					<Select.Trigger class="w-full bg-slate-50" name="article{i}" id="article">
+						<Select.Value />
+					</Select.Trigger>
+					<Select.Content class="bg-slate-50">
+						<Select.Group>
+							<Select.Label>Articles</Select.Label>
+							{#each articles as article}
+								<Select.Item value={article.article_name}>{article.article_name}</Select.Item>
+							{/each}
+						</Select.Group>
+					</Select.Content>
+					<Select.Input name="article{i}" />
+				</Select.Root>
+			</div>
+			<div class="my-4">
+				<Label for="price">Price</Label>
+				<!-- <select name="price{i}" id="price" bind:value={value.price}>
+					{#if values[i].article == 'Idli-khiru'}
+						{#each idliPrices as idliPrice}
+							<option value={idliPrice}>{idliPrice}</option>
+						{/each}
+					{:else if values[i].article == 'Chutney'}
+						{#each chutneyPrices as chutneyPrice}
+							<option value={chutneyPrice}>{chutneyPrice}</option>
+						{/each}
+					{:else if values[i].article == 'Menduvada-khiru'}
+						{#each MenduvadaPrices as MenduvadaPrice}
+							<option value={MenduvadaPrice}>{MenduvadaPrice}</option>
+						{/each}
+					{/if}
+				</select> -->
 
-		<div class="">
-			<label for="qty">Quantity</label>
-			<input type="text" name="qty{i}" id="qty{i}" bind:value={value.qty} />
+				<Select.Root>
+					<Select.Trigger
+						class="w-full bg-slate-50"
+						name="price{i}"
+						id="price"
+						bind:value={value.price}
+					>
+						<Select.Value />
+					</Select.Trigger>
+					<Select.Content class="bg-slate-50">
+						<Select.Group>
+							<Select.Label>Price</Select.Label>
+							{#if values[i].article.value == 'Idli-khiru'}
+								{#each idliPrices as idliPrice}
+									<Select.Item value={idliPrice}>{idliPrice}</Select.Item>
+								{/each}
+							{:else if values[i].article.value == 'Chutney'}
+								{#each chutneyPrices as chutneyPrice}
+									<Select.Item value={chutneyPrice}>{chutneyPrice}</Select.Item>
+								{/each}
+							{:else if values[i].article.value == 'Menduvada-khiru'}
+								{#each MenduvadaPrices as MenduvadaPrice}
+									<Select.Item value={MenduvadaPrice}>{MenduvadaPrice}</Select.Item>
+								{/each}
+							{/if}
+						</Select.Group>
+					</Select.Content>
+					<Select.Input name="price{i}" />
+				</Select.Root>
+			</div>
+
+			<div class="my-4">
+				<Label for="qty" class="">Quantity</Label>
+				<Input type="text" name="qty{i}" id="qty{i}" bind:value={value.qty} class="bg-slate-50" />
+			</div>
+		{/each}
+		<div class="mt-8 flex justify-between px-4">
+			<Button on:click={addMore}>Add More</Button>
+			<Button on:click={removeValues}>Remove</Button>
 		</div>
-	{/each}
-	<button on:click|preventDefault={addMore}>Add More</button>
-	<button on:click|preventDefault={removeValues}>Remove</button>
-	<button type="submit">Submit</button>
-</form>
+		<Button type="submit" class="mt-8 w-full">Submit</Button>
+	</form>
+</div>
 <Navbar />
