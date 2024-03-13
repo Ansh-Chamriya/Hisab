@@ -166,7 +166,7 @@
 
 <!-- <a href="/income"><button>add insert</button></a> -->
 
-<Tabs.Root value="Income" class="m-auto mt-4 w-[95vw]">
+<Tabs.Root value="Income" class="m-auto mb-[7rem] mt-4 w-[95vw]">
 	<Tabs.List class="grid h-fit w-full grid-cols-2 rounded-3xl ">
 		<Tabs.Trigger
 			value="Income"

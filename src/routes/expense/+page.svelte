@@ -26,7 +26,7 @@
 	<p class="text-pretty text-slate-400">
 		Enter the details of your sale to help you track your expense
 	</p>
-	<form method="POST" action="?/create" on:submit={handleClick} class="mt-8">
+	<form method="POST" action="?/create" on:submit={handleClick} class="mb-[7rem] mt-8">
 		<div class="my-4">
 			<Label for="date">Today's Date :</Label>
 			{dayjs(date).format('DD/MM/YYYY')}

@@ -1,5 +1,6 @@
 <script>
 	import * as Avatar from '$lib/components/ui/avatar';
+	import dayjs from 'dayjs';
 	const date = new Date().toString().slice(0, 10);
 	export let Datas;
 </script>
@@ -25,7 +26,9 @@
 				})}
 			</span>
 			<span class="absolute bottom-2 left-14 text-sm text-slate-400">{Data.time}</span>
-			<span class="absolute bottom-2 left-[7.25rem] text-sm text-slate-400">{Data.date}</span>
+			<span class="absolute bottom-2 left-[7.25rem] text-sm text-slate-400"
+				>{dayjs(Data.date).format('DD/MM/YYYY')}</span
+			>
 		</div>
 	{/each}
 </div>
