@@ -16,11 +16,6 @@ export const actions = {
 		}
 		const userData = Object.fromEntries(formData);
 		const udLength = Object.keys(userData).length / 3;
-		// console.log(formData);
-		// console.log(formData.getAll('name'));
-		console.log(userData);
-		// console.log(udLength);
-
 		for (let i = 0; i < udLength; i++) {
 			const { data: profile } = await supabase
 				.from('profiles')
@@ -37,7 +32,6 @@ export const actions = {
 					user_id: profile[0].id
 				})
 				.select();
-			// console.log(data, e);
 		}
 	}
 };

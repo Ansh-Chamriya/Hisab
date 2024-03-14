@@ -26,11 +26,82 @@ export async function load(event) {
 		userid: userSession.user.id,
 		cdate: dayjs().utc().local().format()
 	});
+	const { data: monthlyIdliInsight } = await supabase.rpc('monthly_Income_insights', {
+		articlename: 'Idli-khiru',
+		userid: userSession.user.id,
+		cdate: dayjs().utc().local().format()
+	});
+	const { data: monthlyChutneyInsight } = await supabase.rpc('monthly_Income_insights', {
+		articlename: 'Chutney',
+		userid: userSession.user.id,
+		cdate: dayjs().utc().local().format()
+	});
+	const { data: monthlyMenduvadaInsight } = await supabase.rpc('monthly_Income_insights', {
+		articlename: 'Menduvada-khiru',
+		userid: userSession.user.id,
+		cdate: dayjs().utc().local().format()
+	});
+	const { data: weeklyIdliTotal } = await supabase.rpc('weekarticletotal', {
+		articlename: 'Idli-khiru',
+		userid: userSession.user.id,
+		cdate: dayjs().utc().local().format()
+	});
+	const { data: weeklyChutneyTotal } = await supabase.rpc('weekarticletotal', {
+		articlename: 'Chutney',
+		userid: userSession.user.id,
+		cdate: dayjs().utc().local().format()
+	});
+	const { data: weeklyMenduvadaTotal } = await supabase.rpc('weekarticletotal', {
+		articlename: 'Menduvada-khiru',
+		userid: userSession.user.id,
+		cdate: dayjs().utc().local().format()
+	});
+	const { data: monthlyIdliTotal } = await supabase.rpc('montharticletotal', {
+		articlename: 'Idli-khiru',
+		userid: userSession.user.id,
+		cdate: dayjs().utc().local().format()
+	});
+	const { data: monthlyChutneyTotal } = await supabase.rpc('montharticletotal', {
+		articlename: 'Chutney',
+		userid: userSession.user.id,
+		cdate: dayjs().utc().local().format()
+	});
+	const { data: monthlyMenduvadaTotal } = await supabase.rpc('montharticletotal', {
+		articlename: 'Menduvada-khiru',
+		userid: userSession.user.id,
+		cdate: dayjs().utc().local().format()
+	});
 	const Insightdata = [
-		{ name: 'Idli-khiru', insight: IdliInsight || 0 },
-		{ name: 'Chutney', insight: ChutneyInsight || 0 },
-		{ name: 'Menduvada-khiru', insight: MenduvadaInsight || 0 }
+		[
+			{ name: 'Idli-khiru', insight: IdliInsight || 0, articleTotal: weeklyIdliTotal || 0 },
+			{
+				name: 'Chutney',
+				insight: ChutneyInsight || 0,
+				articleTotal: weeklyChutneyTotal || 0
+			},
+			{
+				name: 'Menduvada-khiru',
+				insight: MenduvadaInsight || 0,
+				articleTotal: weeklyMenduvadaTotal || 0
+			}
+		],
+		[
+			{
+				name: 'Idli-khiru',
+				insight: monthlyIdliInsight || 0,
+				articleTotal: monthlyIdliTotal || 0
+			},
+			{
+				name: 'Chutney',
+				insight: monthlyChutneyInsight || 0,
+				articleTotal: monthlyChutneyTotal || 0
+			},
+			{
+				name: 'Menduvada-khiru',
+				insight: monthlyMenduvadaInsight || 0,
+				articleTotal: monthlyMenduvadaTotal || 0
+			}
+		]
 	];
-	// console.log(dayjs().utc().local().format());
 	return { Insightdata };
 }

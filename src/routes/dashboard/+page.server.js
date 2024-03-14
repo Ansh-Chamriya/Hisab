@@ -1,11 +1,13 @@
 import supabase from '$lib/supabaseClient';
 import { redirect } from '@sveltejs/kit';
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 
 export const load = async (event) => {
 	const userSession = await event.locals.getSession();
 	const weekDate = dayjs().subtract(1, 'week').toISOString();
 	const monthDate = dayjs().subtract(1, 'month').toISOString();
+	dayjs.extend(utc);
 	if (!userSession) {
 		throw redirect(301, '/login');
 	}
@@ -23,7 +25,7 @@ export const load = async (event) => {
 		.from('income')
 		.select('article,price,qty,time,date')
 		.eq('user_id', userSession.user.id)
-		.eq('date', new Date().toISOString());
+		.eq('date', dayjs().utc().local().format());
 
 	// fetching weekly data
 
@@ -32,7 +34,7 @@ export const load = async (event) => {
 		.select('article,price,qty,date,time')
 		.eq('user_id', userSession.user.id)
 		.gt('date', weekDate)
-		.lte('date', dayjs().toISOString());
+		.lte('date', dayjs().utc().local().format());
 
 	// fetching monthly data
 
@@ -41,13 +43,13 @@ export const load = async (event) => {
 		.select('article,price,qty,date,time')
 		.eq('user_id', userSession.user.id)
 		.gt('date', monthDate)
-		.lte('date', dayjs().toISOString());
+		.lte('date', dayjs().utc().local().format());
 
 	// fetching total daily income
 
 	const { data: daytotalIncome } = await supabase.rpc('calculate_daily_total', {
 		p_user_id: userSession.user.id,
-		todaydate: dayjs().toISOString()
+		todaydate: dayjs().utc().local().format()
 	});
 
 	// fetching total weekly income
@@ -55,7 +57,7 @@ export const load = async (event) => {
 	const { data: weekTotalIncome } = await supabase.rpc('calculate_weekly_total', {
 		u_user_id: userSession.user.id,
 		sdate: weekDate,
-		edate: dayjs().toISOString()
+		edate: dayjs().utc().local().format()
 	});
 
 	// fetching total monthly income
@@ -63,7 +65,7 @@ export const load = async (event) => {
 	const { data: monthTotalIncome, error } = await supabase.rpc('calculate_monthly_total', {
 		u_user_id: userSession.user.id,
 		sdate: monthDate,
-		edate: dayjs().toISOString()
+		edate: dayjs().utc().local().format()
 	});
 
 	// Expense section
@@ -74,7 +76,7 @@ export const load = async (event) => {
 		.from('expense')
 		.select('article,price,qty,time')
 		.eq('user_id', userSession.user.id)
-		.eq('date', dayjs().toISOString());
+		.eq('date', dayjs().utc().local().format());
 
 	// fetching weekly data
 
@@ -83,7 +85,7 @@ export const load = async (event) => {
 		.select('article,price,qty,date,time')
 		.eq('user_id', userSession.user.id)
 		.gt('date', weekDate)
-		.lte('date', dayjs().toISOString());
+		.lte('date', dayjs().utc().local().format());
 
 	// fetching monthly data
 
@@ -92,13 +94,13 @@ export const load = async (event) => {
 		.select('article,price,qty,date,time')
 		.eq('user_id', userSession.user.id)
 		.gt('date', monthDate)
-		.lte('date', dayjs().toISOString());
+		.lte('date', dayjs().utc().local().format());
 
 	// Fetching daily total expense
 
 	const { data: daytotalExpense } = await supabase.rpc('calculate_daily_total_expense', {
 		p_user_id: userSession.user.id,
-		todaydate: dayjs().toISOString()
+		todaydate: dayjs().utc().local().format()
 	});
 
 	// fetching total weekly expense
@@ -106,7 +108,7 @@ export const load = async (event) => {
 	const { data: weekTotalExpense } = await supabase.rpc('calculate_weekly_total_expense', {
 		u_user_id: userSession.user.id,
 		sdate: weekDate,
-		edate: dayjs().toISOString()
+		edate: dayjs().utc().local().format()
 	});
 
 	// fetching total monthly income
@@ -114,7 +116,7 @@ export const load = async (event) => {
 	const { data: monthTotalExpense } = await supabase.rpc('calculate_monthly_total_expense', {
 		u_user_id: userSession.user.id,
 		sdate: monthDate,
-		edate: dayjs().toISOString()
+		edate: dayjs().utc().local().format()
 	});
 
 	return {

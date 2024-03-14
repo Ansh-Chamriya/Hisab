@@ -5,7 +5,8 @@
 	import { Badge } from '$lib/components/ui/badge';
 	import Button from '$lib/components/ui/button/button.svelte';
 	let activeTab = 'week';
-	const insightdata = data.Insightdata;
+	const weeklyinsightdata = data.Insightdata[0];
+	const monthlyinsightdata = data.Insightdata[1];
 </script>
 
 <div class=" p-5">
@@ -20,7 +21,11 @@
 		class="rounded-2xl p-3"
 		on:click={() => (activeTab = 'month')}>This Month</Button
 	>
-	<InsightsData Insights={insightdata} />
+	{#if activeTab === 'week'}
+		<InsightsData Insights={weeklyinsightdata} />
+	{:else if activeTab === 'month'}
+		<InsightsData Insights={monthlyinsightdata} />
+	{/if}
 </div>
 <Navbar />
 
