@@ -7,7 +7,7 @@ export const load = async (event) => {
 	const session = await event.locals.getSession();
 
 	if (session) {
-		throw redirect(301, '/');
+		throw redirect(301, '/dashboard');
 	}
 	return {};
 };
