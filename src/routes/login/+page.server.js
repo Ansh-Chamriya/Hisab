@@ -3,12 +3,12 @@ import { profile } from '$lib/schema';
 import supabase from '$lib/supabaseClient';
 import { fail, redirect } from '@sveltejs/kit';
 
-export const actions = () => {
+export const actions = {
 	login: async ({ request, locals, url }) => {
 		const provider = url.searchParams.get('provider');
 		if (provider) {
 			const { data, error } = await locals.supabase.auth.signInWithOAuth({
-				provider: provider
+				provider: 'google'
 			});
 
 			if (error) {
