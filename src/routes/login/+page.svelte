@@ -11,7 +11,7 @@
 			options: {
 				redirectTo: `http://hisab-seven.vercel.app/login/callback`,
 				queryParams: {
-					apikey: PUBLIC_DATABASE_ANON_KEY
+					apikey: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmcGZoZ3ZrYWxnbGRmbHZybHZpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDc0OTM5OTEsImV4cCI6MjAyMzA2OTk5MX0.FlJXjXKsC-KzvBgoOBlgZUCKq2_XCkvIcbj0XeIhyHU`
 				}
 			}
 		});
