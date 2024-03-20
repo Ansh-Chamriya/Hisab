@@ -11,7 +11,7 @@
 			options: {
 				redirectTo: '/auth/callback',
 				queryParams: {
-					api: PUBLIC_DATABASE_ANON_KEY
+					apikey: PUBLIC_DATABASE_ANON_KEY
 				}
 			}
 		});
