@@ -4,16 +4,16 @@
 	import { Button } from '$lib/components/ui/button';
 	let { supabase } = data;
 
-	async function signInWithGoogle() {
-		const { data, error } = await supabase.auth.signInWithOAuth({
-			provider: 'google',
-			options: {
-				redirectTo: '/auth/callback'
-			}
-		});
+	// async function signInWithGoogle() {
+	// 	const { data, error } = await supabase.auth.signInWithOAuth({
+	// 		provider: 'google',
+	// 		options: {
+	// 			redirectTo: '/auth/callback'
+	// 		}
+	// 	});
 
-		console.log(data, error);
-	}
+	// 	console.log(data, error);
+	// }
 </script>
 
 <div class="flex min-h-screen items-center justify-center">
@@ -22,9 +22,11 @@
 			<Card.Title class="mb-7 text-2xl">Login</Card.Title>
 		</Card.Header>
 		<Card.Content>
-			<Button class="p-6 text-center text-white" on:click={signInWithGoogle}
-				>Sign In With Google</Button
-			>
+			<form action="" method="POST">
+				<Button formaction="?/login&provider=google" class="p-6 text-center text-white"
+					>Sign In With Google</Button
+				>
+			</form>
 		</Card.Content>
 	</Card.Root>
 </div>
