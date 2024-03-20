@@ -25,5 +25,5 @@ export const actions = {
 		// 	throw redirect(301, '/dashboard');
 		// }
 		// return {};
-	};
+	}
 };
