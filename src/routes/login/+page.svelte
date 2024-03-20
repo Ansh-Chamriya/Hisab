@@ -9,7 +9,7 @@
 		const { data, error } = await supabase.auth.signInWithOAuth({
 			provider: 'google',
 			options: {
-				redirectTo: 'http://hisab-seven.vercel.app/provider?refresh=true',
+				redirectTo: 'http://hisab-seven.vercel.app/',
 				queryParams: {
 					apikey: PUBLIC_DATABASE_ANON_KEY
 				}
