@@ -9,6 +9,7 @@
 		const { data, error } = await supabase.auth.signInWithOAuth({
 			provider: 'google',
 			options: {
+				redirectTo: 'http://hisab-seven.vercel.app/provider?refresh=true',
 				queryParams: {
 					apikey: PUBLIC_DATABASE_ANON_KEY
 				}
@@ -20,16 +21,14 @@
 </script>
 
 <div class="flex min-h-screen items-center justify-center">
-	<form action="" method="post">
-		<Card.Root class="h-[23vh] ">
-			<Card.Header>
-				<Card.Title class="mb-7 text-2xl">Login</Card.Title>
-			</Card.Header>
-			<Card.Content>
-				<Button on:click={signInWithGoogle} class="p-6 text-center text-white"
-					>Sign In With Google</Button
-				>
-			</Card.Content>
-		</Card.Root>
-	</form>
+	<Card.Root class="h-[23vh] ">
+		<Card.Header>
+			<Card.Title class="mb-7 text-2xl">Login</Card.Title>
+		</Card.Header>
+		<Card.Content>
+			<Button on:click={signInWithGoogle} class="p-6 text-center text-white"
+				>Sign In With Google</Button
+			>
+		</Card.Content>
+	</Card.Root>
 </div>
