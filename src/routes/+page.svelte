@@ -12,7 +12,7 @@
 		}
 	}
 	let isft = false;
-	if (isft) {
+	$: if (isft) {
 		hello();
 	}
 	onMount(() => {
