@@ -6,11 +6,6 @@
             "src": "/android-launchericon-512-512.png",
             "type": "image/png",
             "sizes": "512x512"
-        },
-        {
-            "src": "/android-launchericon-192-192.png",
-            "type": "image/png",
-            "sizes": "192x192"
         }
     ],
     "start_url": "/",
@@ -29,25 +24,25 @@
         {
             "src": "/ui-2.png",
             "type": "image/png",
-            "sizes": "720x540",
+            "sizes": "540x720",
             "form_factor": "narrow"
         },
         {
             "src": "/ui-3.png",
             "type": "image/png",
-            "sizes": "720x540",
+            "sizes": "540x720",
             "form_factor": "narrow"
         },
         {
             "src": "/ui-4.png",
             "type": "image/png",
-            "sizes": "720x540",
+            "sizes": "540x720",
             "form_factor": "narrow"
         },
         {
             "src": "/ui-5.png",
             "type": "image/png",
-            "sizes": "720x540",
+            "sizes": "540x720",
             "form_factor": "narrow"
         }
     ]
