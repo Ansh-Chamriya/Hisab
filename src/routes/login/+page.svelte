@@ -4,10 +4,14 @@
 	import { Button } from '$lib/components/ui/button';
 	import { PUBLIC_DATABASE_ANON_KEY } from '$env/static/public';
 	import { redirect } from '@sveltejs/kit';
+	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
 	let { supabase } = data;
 
 	function getVercelAppUrl() {
-		return process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:5173';
+		return import.meta.env.VERCEL_URL
+			? `https://${import.meta.env.VERCEL_URL}`
+			: 'http://localhost:5173';
 	}
 
 	async function signInWithGoogle() {
@@ -18,6 +22,12 @@
 			}
 		});
 	}
+	onMount(async () => {
+		const { data } = await supabase.auth.getUser();
+		if (data.user) {
+			goto('/dashboard', { replaceState: true });
+		}
+	});
 </script>
 
 <div class="flex min-h-screen items-center justify-center">
