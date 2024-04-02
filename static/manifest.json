@@ -13,8 +13,7 @@
             "sizes": "192x192"
         }
     ],
-    "id": "/",
-    "start_url": "/dashboard",
+    "start_url": "/",
     "background_color": "#ffffff",
     "display": "standalone",
     "scope": "/",
