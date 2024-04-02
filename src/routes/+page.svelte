@@ -45,9 +45,9 @@
 	<h1 class="font-mono text-7xl">Hisab</h1>
 	<span class="mb-8 pr-10">- Your Expense Buddy</span>
 
-	{#if !isft}
-		<a href="/login"><Button>Get Started</Button></a>
-	{:else}
+	{#if isft}
 		<p>Loading...</p>
+	{:else}
+		<a href="/login"><Button>Get Started</Button></a>
 	{/if}
 </div>
