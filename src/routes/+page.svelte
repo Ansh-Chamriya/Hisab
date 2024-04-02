@@ -1,16 +1,23 @@
 <script>
 	import { Button } from '$lib/components/ui/button';
 	import { onMount } from 'svelte';
-	import { getMessaging, getToken } from 'firebase/messaging';
-	import { initializeApp } from 'firebase/app';
 	import supabase from '$lib/supabaseClient';
 	import { goto } from '$app/navigation';
-	(async () => {
+
+	async function hello() {
 		const { data } = await supabase.auth.getUser();
+		console.log(data);
 		if (data.user) {
 			goto('/dashboard', { replaceState: true });
 		}
-	})();
+	}
+	let isft = false;
+	if (isft) {
+		hello();
+	}
+	onMount(() => {
+		isft = true;
+	});
 	// onMount(async () => {
 	// 	const firebaseConfig = {
 	// 		apiKey: 'AIzaSyD4RsxaaH5_LRXzptmLRYuzHYbj0X_6ZP8',
