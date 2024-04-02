@@ -6,11 +6,15 @@
 	import { redirect } from '@sveltejs/kit';
 	let { supabase } = data;
 
+	function getVercelAppUrl() {
+		return process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:5173';
+	}
+
 	async function signInWithGoogle() {
 		const { data, error } = await supabase.auth.signInWithOAuth({
 			provider: 'google',
 			options: {
-				redirectTo: `/login/callback`
+				redirectTo: `${getVercelAppUrl()}/login/callback`
 			}
 		});
 
