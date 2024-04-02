@@ -1,0 +1,55 @@
+{
+    "short_name": "Hisab",
+    "name": "Hisab Your Expense Buddy",
+    "icons": [
+        {
+            "src": "static/android-launchericon-512-512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        },
+        {
+            "src": "static/android-launchericon-192-192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        }
+    ],
+    "id": "/",
+    "start_url": "/dashboard",
+    "background_color": "#ffffff",
+    "display": "standalone",
+    "scope": "/",
+    "theme_color": "#ffffff",
+    "description": "Your Expense Buddy",
+    "screenshots": [
+        {
+            "src": "static/ui-1.png",
+            "type": "image/png",
+            "sizes": "540x720",
+            "form_factor": "narrow"
+        },
+        {
+            "src": "static/ui-2.png",
+            "type": "image/png",
+            "sizes": "720x540",
+            "form_factor": "narrow"
+        },
+        {
+            "src": "static/ui-3.png",
+            "type": "image/png",
+            "sizes": "720x540",
+            "form_factor": "narrow"
+        },
+        {
+            "src": "static/ui-4.png",
+            "type": "image/png",
+            "sizes": "720x540",
+            "form_factor": "narrow"
+        },
+        {
+            "src": "static/ui-5.png",
+            "type": "image/png",
+            "sizes": "720x540",
+            "form_factor": "narrow"
+        }
+    ]
+}
