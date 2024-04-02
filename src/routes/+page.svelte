@@ -4,16 +4,9 @@
 	import supabase from '$lib/supabaseClient';
 	import { goto } from '$app/navigation';
 
-	async function hello() {
-		const { data } = await supabase.auth.getUser();
-		console.log(data);
-		if (data.user) {
-			goto('/dashboard', { replaceState: true });
-		}
-	}
 	let isft = false;
 	$: if (isft) {
-		hello();
+		goto('/dashboard', { replaceState: true });
 	}
 	onMount(() => {
 		isft = true;
