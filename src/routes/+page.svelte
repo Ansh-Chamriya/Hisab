@@ -44,5 +44,10 @@
 <div class="flex min-h-screen flex-col items-center justify-center border-2 border-black">
 	<h1 class="font-mono text-7xl">Hisab</h1>
 	<span class="mb-8 pr-10">- Your Expense Buddy</span>
-	<a href="/login"><Button>Get Started</Button></a>
+
+	{#if !isft}
+		<a href="/login"><Button>Get Started</Button></a>
+	{:else}
+		<p>Loading...</p>
+	{/if}
 </div>
