@@ -3,6 +3,7 @@
 	import * as Card from '$lib/components/ui/card';
 	import { Button } from '$lib/components/ui/button';
 	import { PUBLIC_DATABASE_ANON_KEY } from '$env/static/public';
+	import { redirect } from '@sveltejs/kit';
 	let { supabase } = data;
 
 	async function signInWithGoogle() {
@@ -12,6 +13,10 @@
 				redirectTo: `/login/callback`
 			}
 		});
+
+		if (data.url) {
+			redirect(302, data.url); // use the redirect API for your server framework
+		}
 	}
 </script>
 
