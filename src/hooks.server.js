@@ -1,14 +1,25 @@
 import { PUBLIC_DATABASE_URL, PUBLIC_DATABASE_ANON_KEY } from '$env/static/public';
-import { createSupabaseServerClient } from '@supabase/auth-helpers-sveltekit';
+import { createServerClient } from '@supabase/ssr';
+// import  { Handle } from '@sveltejs/kit'
 
 export const handle = async ({ event, resolve }) => {
-	const supabaseServer = createSupabaseServerClient({
-		supabaseUrl: PUBLIC_DATABASE_URL,
-		supabaseKey: PUBLIC_DATABASE_ANON_KEY,
-		event
+	event.locals.supabase = createServerClient(PUBLIC_DATABASE_URL, PUBLIC_DATABASE_ANON_KEY, {
+		cookies: {
+			get: (key) => event.cookies.get(key),
+			/**
+			 * Note: You have to add the `path` variable to the
+			 * set and remove method due to sveltekit's cookie API
+			 * requiring this to be set, setting the path to an empty string
+			 * will replicate previous/standard behaviour (https://kit.svelte.dev/docs/types#public-types-cookies)
+			 */
+			set: (key, value, options) => {
+				event.cookies.set(key, value, { ...options, path: '/' });
+			},
+			remove: (key, options) => {
+				event.cookies.delete(key, { ...options, path: '/' });
+			}
+		}
 	});
-
-	event.locals.supabase = supabaseServer;
 
 	/**
 	 * a little helper that is written for convenience so that instead
@@ -18,7 +29,7 @@ export const handle = async ({ event, resolve }) => {
 	event.locals.getSession = async () => {
 		const {
 			data: { session }
-		} = await supabaseServer.auth.getSession();
+		} = await event.locals.supabase.auth.getSession();
 		return session;
 	};
 
