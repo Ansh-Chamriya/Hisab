@@ -6,8 +6,8 @@ export const actions = {
 	create: async (event) => {
 		dayjs.extend(utc);
 		const formData = await event.request.formData();
-		const date = dayjs().utc().local().format();
-		const time = dayjs().utc().local().format().toString().slice(16, 25);
+		const date = dayjs().utc().local().format('DD:MM:YYYY');
+		const time = dayjs().utc().local().format('hh:mm:ss');
 		let article = formData.get('article');
 		let otherArticle = formData.get('otherArticle');
 		otherArticle =
