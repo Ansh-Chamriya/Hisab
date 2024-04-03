@@ -2,9 +2,13 @@ import supabase from '$lib/supabaseClient';
 import { redirect } from '@sveltejs/kit';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
 
 export const load = async (event) => {
 	dayjs.extend(utc);
+	dayjs.extend(timezone);
+
+	const d = dayjs().utc().local();
 	const userSession = await event.locals.getSession();
 	const weekDate = dayjs().startOf('w').add(1, 'day').utc().local().format();
 	const monthDate = dayjs().startOf('M').utc().local().format();
@@ -38,63 +42,63 @@ export const load = async (event) => {
 			.from('income')
 			.select('article,price,qty,time,date')
 			.eq('user_id', userSession.user.id)
-			.eq('date', dayjs().utc().local().format()),
+			.eq('date', dayjs.tz(d, 'Asia/Kolkata').format()),
 		supabase
 			.from('income')
 			.select('article,price,qty,date,time')
 			.eq('user_id', userSession.user.id)
 			.gte('date', weekDate)
-			.lte('date', dayjs().utc().local().format()),
+			.lte('date', dayjs.tz(d, 'Asia/Kolkata').format()),
 		supabase
 			.from('income')
 			.select('article,price,qty,date,time')
 			.eq('user_id', userSession.user.id)
 			.gte('date', monthDate)
-			.lte('date', dayjs().utc().local().format()),
+			.lte('date', dayjs.tz(d, 'Asia/Kolkata').format()),
 		supabase.rpc('calculate_daily_total', {
 			p_user_id: userSession.user.id,
-			todaydate: dayjs().utc().local().format()
+			todaydate: dayjs.tz(d, 'Asia/Kolkata').format()
 		}),
 		supabase.rpc('calculate_weekly_total', {
 			u_user_id: userSession.user.id,
 			sdate: weekDate,
-			edate: dayjs().utc().local().format()
+			edate: dayjs.tz(d, 'Asia/Kolkata').format()
 		}),
 		supabase.rpc('calculate_monthly_total', {
 			u_user_id: userSession.user.id,
 			sdate: monthDate,
-			edate: dayjs().utc().local().format()
+			edate: dayjs.tz(d, 'Asia/Kolkata').format()
 		}),
 		supabase
 			.from('expense')
 			.select('article,price,qty,time')
 			.eq('user_id', userSession.user.id)
-			.eq('date', dayjs().utc().local().format()),
+			.eq('date', dayjs.tz(d, 'Asia/Kolkata').format()),
 		supabase
 			.from('expense')
 			.select('article,price,qty,date,time')
 			.eq('user_id', userSession.user.id)
 			.gte('date', weekDate)
-			.lte('date', dayjs().utc().local().format()),
+			.lte('date', dayjs.tz(d, 'Asia/Kolkata').format()),
 		supabase
 			.from('expense')
 			.select('article,price,qty,date,time')
 			.eq('user_id', userSession.user.id)
 			.gte('date', monthDate)
-			.lte('date', dayjs().utc().local().format()),
+			.lte('date', dayjs.tz(d, 'Asia/Kolkata').format()),
 		supabase.rpc('calculate_daily_total_expense', {
 			p_user_id: userSession.user.id,
-			todaydate: dayjs().utc().local().format()
+			todaydate: dayjs.tz(d, 'Asia/Kolkata').format()
 		}),
 		supabase.rpc('calculate_weekly_total_expense', {
 			u_user_id: userSession.user.id,
 			sdate: weekDate,
-			edate: dayjs().utc().local().format()
+			edate: dayjs.tz(d, 'Asia/Kolkata').format()
 		}),
 		supabase.rpc('calculate_monthly_total_expense', {
 			u_user_id: userSession.user.id,
 			sdate: monthDate,
-			edate: dayjs().utc().local().format()
+			edate: dayjs.tz(d, 'Asia/Kolkata').format()
 		})
 	]);
 	// fetching daily Income data
