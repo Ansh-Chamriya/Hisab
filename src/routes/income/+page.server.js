@@ -7,8 +7,8 @@ export const actions = {
 	create: async (event) => {
 		dayjs.extend(utc);
 		const formData = await event.request.formData();
-		const date = dayjs().utc().local().format('DD:MM:YYYY');
-		const time = dayjs().utc().local().format('hh:mm:ss').toString();
+		const date = dayjs(new Date()).hour(12);
+		const time = new Date().toString().slice(16, 25);
 		const articles = {};
 		const price = formData.get('price');
 		const qty = formData.get('qty');
