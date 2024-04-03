@@ -3,6 +3,8 @@
 	import * as Card from '$lib/components/ui/card';
 	import { Button } from '$lib/components/ui/button';
 	import { PUBLIC_DATABASE_ANON_KEY } from '$env/static/public';
+	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
 	let { supabase } = data;
 
 	function getVercelAppUrl() {
