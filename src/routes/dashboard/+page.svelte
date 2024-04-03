@@ -2,7 +2,7 @@
 	export let data;
 	import dayjs from 'dayjs';
 	import * as Avatar from '$lib/components/ui/avatar';
-
+	import { Skeleton } from '$lib/components/ui/skeleton';
 	import { Button } from '$lib/components/ui/button';
 	import * as Tabs from '$lib/components/ui/tabs';
 	import * as Card from '$lib/components/ui/card';
@@ -45,7 +45,7 @@
 		end: today(getLocalTimeZone()).add({ days: 7 })
 	};
 
-	$: console.log(data);
+	// console.log('d atsss', dateValues);
 
 	// $: console.log(dateValues.end);
 	const INRCurrency = (amount) => {
@@ -96,43 +96,20 @@
 	onMount(() => {
 		canRun = true;
 	});
-	// const searchParams = new URLSearchParams('start=null&end=null');
-
-	// function go() {
-	// 	if (dateValues.start && dateValues.end) {
-	// 		const start = new Date(dateValues.start.year, dateValues.start.month, dateValues.start.day);
-	// 		const end = new Date(dateValues.end.year, dateValues.end.month, dateValues.end.day);
-	// 		searchParams.set('start', start.toLocaleDateString());
-	// 		searchParams.set('end', end.toLocaleDateString());
-	// 		goto(`?${searchParams.toString()}`);
-	// 		console.log(start.toLocaleDateString());
-	// 		console.log(end.toLocaleDateString());
-	// 	}
-	// }
-	// $: go();
-	// $: docs = $page.url.searchParams.get('docs') === 'true';
-	// $: site = parseInt($page.url.searchParams.get('page')?.toString() || '0');
-	// $: console.log(dateValues);
-	// console.log(dateValues.start.day, dateValues.end.month);
 </script>
 
-{#if $navigating}
-	<div class="flex h-full w-full items-center justify-center">
-		<Jumper size="80" color="#000000" unit="px" duration="1s" />
-	</div>
-{:else}
-	<nav>
-		<div class="mt-4 flex p-2">
-			<Avatar.Root class="mr-6 size-[3.25rem]">
-				<Avatar.Image src={avatarUrl} alt="userImage" />
-				<Avatar.Fallback>CN</Avatar.Fallback>
-			</Avatar.Root>
-			<div class="">
-				<h1 class="mb-1 translate-y-1 text-[1.25rem] font-bold">Welcome, {name}</h1>
-				<p class="text-bold text-xs text-slate-600">Don't worry, here is your buddy</p>
-			</div>
+<nav>
+	<div class="mt-4 flex p-2">
+		<Avatar.Root class="mr-6 size-[3.25rem]">
+			<Avatar.Image src={avatarUrl} alt="userImage" />
+			<Avatar.Fallback>CN</Avatar.Fallback>
+		</Avatar.Root>
+		<div class="">
+			<h1 class="mb-1 translate-y-1 text-[1.25rem] font-bold">Welcome, {name}</h1>
+			<p class="text-bold text-xs text-slate-600">Don't worry, here is your buddy</p>
 		</div>
-	</nav>
+	</div>
+</nav>
 
 	<div class="filter-container m-auto mt-4 w-fit">
 		<Button

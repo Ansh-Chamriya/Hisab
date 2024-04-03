@@ -7,8 +7,6 @@
 	import SelectItem from '$lib/components/ui/select/select-item.svelte';
 	import Input from '$lib/components/ui/input/input.svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
-	import { navigating } from '$app/stores';
-	import { Jumper } from 'svelte-loading-spinners';
 	function handleClick() {
 		toast.success('Expense Added Succesfully');
 	}
@@ -47,41 +45,40 @@
 				{/each}
 			</select> -->
 
-				<Select.Root bind:selected={isSelected}>
-					<Select.Trigger class="w-full bg-slate-50" name="article" id="article">
-						<Select.Value />
-					</Select.Trigger>
-					<Select.Content class="bg-slate-50">
-						<Select.Group>
-							<Select.Label>Articles</Select.Label>
-							{#each articles as article}
-								<SelectItem value={article.article_name}>{article.article_name}</SelectItem>
-							{/each}
-						</Select.Group>
-					</Select.Content>
-					<Select.Input name="article" />
-				</Select.Root>
-				{#if isSelected.value == 'Other'}
-					<div class="my-4">
-						<Label for="article">Enter Article Name</Label>
-						<Input type="text" name="otherArticle" bind:value={otherValue} />
-					</div>
-				{/if}
-			</div>
-			<div class="my-4">
-				<Label for="price">Price</Label>
-				<Input type="text" id="price" name="price" class="bg-slate-50" />
-			</div>
-			<div class="my-4">
-				<Label for="qty">Quantity</Label>
-				{#if otherValue.toUpperCase() == 'CASH' || otherValue.toUpperCase() == 'SAMAN'}
-					<Input type="text" name="qty" id="qty" disabled class="bg-slate-50" />
-				{:else}
-					<Input type="text" name="qty" id="qty" class="bg-slate-50" />
-				{/if}
-			</div>
-			<Button type="submit" class="mt-6 w-full p-5">Submit</Button>
-		</form>
-	</div>
-{/if}
+			<Select.Root bind:selected={isSelected}>
+				<Select.Trigger class="w-full bg-slate-50" name="article" id="article">
+					<Select.Value />
+				</Select.Trigger>
+				<Select.Content class="bg-slate-50">
+					<Select.Group>
+						<Select.Label>Articles</Select.Label>
+						{#each articles as article}
+							<SelectItem value={article.article_name}>{article.article_name}</SelectItem>
+						{/each}
+					</Select.Group>
+				</Select.Content>
+				<Select.Input name="article" />
+			</Select.Root>
+			{#if isSelected.value == 'Other'}
+				<div class="my-4">
+					<Label for="article">Enter Article Name</Label>
+					<Input type="text" name="otherArticle" bind:value={otherValue} />
+				</div>
+			{/if}
+		</div>
+		<div class="my-4">
+			<Label for="price">Price</Label>
+			<Input type="text" id="price" name="price" class="bg-slate-50" />
+		</div>
+		<div class="my-4">
+			<Label for="qty">Quantity</Label>
+			{#if otherValue.toUpperCase() == 'CASH' || otherValue.toUpperCase() == 'SAMAN'}
+				<Input type="text" name="qty" id="qty" disabled class="bg-slate-50" />
+			{:else}
+				<Input type="text" name="qty" id="qty" class="bg-slate-50" />
+			{/if}
+		</div>
+		<Button type="submit" class="mt-6 w-full p-5">Submit</Button>
+	</form>
+</div>
 <Navbar />

@@ -11,7 +11,7 @@ export const actions = {
 
 		const formData = await event.request.formData();
 		const d = dayjs().utc().local();
-		const t = dayjs().utc().local().format('hh:mm:ss');
+		const t = dayjs().utc().local();
 		const date = dayjs.tz(d, 'Asia/Kolkata').format();
 		const time = dayjs.tz(t, 'Asia/Kolkata').format('hh:mm:ss');
 		const articles = {};
