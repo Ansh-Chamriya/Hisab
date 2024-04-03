@@ -17,6 +17,8 @@
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
+		"@vite-pwa/assets-generator": "^0.2.4",
+		"@vite-pwa/sveltekit": "^0.4.0",
 		"autoprefixer": "^10.4.16",
 		"date-picker-svelte": "^2.10.1",
 		"drizzle-kit": "^0.20.14",
