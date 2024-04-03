@@ -2,16 +2,29 @@
 	export let data;
 	import * as Card from '$lib/components/ui/card';
 	import { Button } from '$lib/components/ui/button';
+	import { PUBLIC_DATABASE_ANON_KEY } from '$env/static/public';
 	let { supabase } = data;
+
+	function getVercelAppUrl() {
+		return import.meta.env.VERCEL_URL
+			? `https://${import.meta.env.VERCEL_URL}`
+			: 'http://localhost:5173';
+	}
 
 	async function signInWithGoogle() {
 		const { data, error } = await supabase.auth.signInWithOAuth({
 			provider: 'google',
 			options: {
-				redirectTo: `/login/callback`
+				redirectTo: `${getVercelAppUrl()}/login/callback`
 			}
 		});
 	}
+	onMount(async () => {
+		const { data } = await supabase.auth.getUser();
+		if (data.user) {
+			goto('/dashboard', { replaceState: true });
+		}
+	});
 </script>
 
 <div class="flex min-h-screen items-center justify-center">

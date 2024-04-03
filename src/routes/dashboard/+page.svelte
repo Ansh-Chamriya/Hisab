@@ -43,6 +43,9 @@
 		end: today(getLocalTimeZone()).add({ days: 7 })
 	};
 
+	// console.log('d atsss', dateValues);
+
+	// $: console.log(dateValues.end);
 	const INRCurrency = (amount) => {
 		return amount.toLocaleString('en-IN', {
 			maximumFractionDigits: 2,

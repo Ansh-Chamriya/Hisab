@@ -1,9 +1,16 @@
 <script>
 	import { Button } from '$lib/components/ui/button';
 	import { onMount } from 'svelte';
-	import { getMessaging, getToken } from 'firebase/messaging';
-	import { initializeApp } from 'firebase/app';
+	import supabase from '$lib/supabaseClient';
+	import { goto } from '$app/navigation';
 
+	let isft = false;
+	$: if (isft) {
+		goto('/dashboard', { replaceState: true });
+	}
+	onMount(() => {
+		isft = true;
+	});
 	// onMount(async () => {
 	// 	const firebaseConfig = {
 	// 		apiKey: 'AIzaSyD4RsxaaH5_LRXzptmLRYuzHYbj0X_6ZP8',
@@ -37,5 +44,10 @@
 <div class="flex min-h-screen flex-col items-center justify-center border-2 border-black">
 	<h1 class="font-mono text-7xl">Hisab</h1>
 	<span class="mb-8 pr-10">- Your Expense Buddy</span>
-	<a href="/login"><Button>Get Started</Button></a>
+
+	{#if isft}
+		<p>Loading...</p>
+	{:else}
+		<a href="/login"><Button>Get Started</Button></a>
+	{/if}
 </div>
