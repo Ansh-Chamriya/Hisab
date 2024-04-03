@@ -16,6 +16,8 @@
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import Navbar from '$lib/Navbar.svelte';
+	import { navigating } from '$app/stores';
+	import { Jumper } from 'svelte-loading-spinners';
 	$: isActive = null;
 	$: isBActive = null;
 	// today || "thisweek" || "thismonth" || "calender"
@@ -114,143 +116,148 @@
 	// console.log(dateValues.start.day, dateValues.end.month);
 </script>
 
-<nav>
-	<div class="mt-4 flex p-2">
-		<Avatar.Root class="mr-6 size-[3.25rem]">
-			<Avatar.Image src={avatarUrl} alt="userImage" />
-			<Avatar.Fallback>CN</Avatar.Fallback>
-		</Avatar.Root>
-		<div class="">
-			<h1 class="mb-1 translate-y-1 text-[1.25rem] font-bold">Welcome, {name}</h1>
-			<p class="text-bold text-xs text-slate-600">Don't worry, here is your buddy</p>
-		</div>
+{#if $navigating}
+	<div class="flex h-full w-full items-center justify-center">
+		<Jumper size="80" color="#000000" unit="px" duration="1s" />
 	</div>
-</nav>
+{:else}
+	<nav>
+		<div class="mt-4 flex p-2">
+			<Avatar.Root class="mr-6 size-[3.25rem]">
+				<Avatar.Image src={avatarUrl} alt="userImage" />
+				<Avatar.Fallback>CN</Avatar.Fallback>
+			</Avatar.Root>
+			<div class="">
+				<h1 class="mb-1 translate-y-1 text-[1.25rem] font-bold">Welcome, {name}</h1>
+				<p class="text-bold text-xs text-slate-600">Don't worry, here is your buddy</p>
+			</div>
+		</div>
+	</nav>
 
-<div class="filter-container m-auto mt-4 w-fit">
-	<Button
-		variant={active_tab === 'today' ? 'default' : 'secondary'}
-		on:click={() => (active_tab = 'today')}
-		class="rounded-3xl"
-		autofocus>Today</Button
-	>
-	<Button
-		variant={active_tab === 'thisweek' ? 'default' : 'secondary'}
-		class="rounded-3xl"
-		on:click={() => (active_tab = 'thisweek')}>This week</Button
-	>
-	<Button
-		variant={active_tab === 'thismonth' ? 'default' : 'secondary'}
-		class="rounded-3xl"
-		on:click={() => (active_tab = 'thismonth')}>This month</Button
-	>
-	<Popover.Root openFocus>
-		<Popover.Trigger asChild let:builder>
-			<Button
-				variant={active_tab === 'calender' ? 'default' : 'secondary'}
-				class="rounded-3xl"
-				builders={[builder]}
-				on:click={() => (active_tab = 'calender')}>Calender</Button
+	<div class="filter-container m-auto mt-4 w-fit">
+		<Button
+			variant={active_tab === 'today' ? 'default' : 'secondary'}
+			on:click={() => (active_tab = 'today')}
+			class="rounded-3xl"
+			autofocus>Today</Button
+		>
+		<Button
+			variant={active_tab === 'thisweek' ? 'default' : 'secondary'}
+			class="rounded-3xl"
+			on:click={() => (active_tab = 'thisweek')}>This week</Button
+		>
+		<Button
+			variant={active_tab === 'thismonth' ? 'default' : 'secondary'}
+			class="rounded-3xl"
+			on:click={() => (active_tab = 'thismonth')}>This month</Button
+		>
+		<Popover.Root openFocus>
+			<Popover.Trigger asChild let:builder>
+				<Button
+					variant={active_tab === 'calender' ? 'default' : 'secondary'}
+					class="rounded-3xl"
+					builders={[builder]}
+					on:click={() => (active_tab = 'calender')}>Calender</Button
+				>
+			</Popover.Trigger>
+			<Popover.Content class="w-auto p-0" align="start">
+				<RangeCalendar
+					on:click={getCalenderIncome}
+					bind:value={dateValues}
+					class="rounded-md border shadow"
+				/>
+				<!-- <Button on:click={getCalenderIncome}>Apply</Button> -->
+			</Popover.Content>
+		</Popover.Root>
+	</div>
+
+	<!-- <a href="/income"><button>add insert</button></a> -->
+
+	<Tabs.Root value="Income" class="m-auto mb-[7rem] mt-4 w-[95vw]">
+		<Tabs.List class="grid h-fit w-full grid-cols-2 rounded-3xl ">
+			<Tabs.Trigger
+				value="Income"
+				class="rounded-3xl p-2 data-[state=active]:bg-black data-[state=active]:text-slate-200"
+				>Income</Tabs.Trigger
 			>
-		</Popover.Trigger>
-		<Popover.Content class="w-auto p-0" align="start">
-			<RangeCalendar
-				on:click={getCalenderIncome}
-				bind:value={dateValues}
-				class="rounded-md border shadow"
-			/>
-			<!-- <Button on:click={getCalenderIncome}>Apply</Button> -->
-		</Popover.Content>
-	</Popover.Root>
-</div>
+			<Tabs.Trigger
+				value="Expense"
+				class="rounded-3xl p-2 data-[state=active]:bg-black data-[state=active]:text-slate-200"
+				>Expense</Tabs.Trigger
+			>
+		</Tabs.List>
+		<Tabs.Content value="Income">
+			<Card.Root class="">
+				<Card.Content class="p-0 py-6">
+					<div
+						class="expense-container text-s m-auto flex h-[12vh] w-[85vw] flex-col items-center justify-center rounded-lg bg-black text-slate-300"
+					>
+						Income so far
+						<span class=" text-3xl text-white">
+							{#if active_tab === 'today'}
+								{INRCurrency(dayTotalIncome)}
+							{:else if active_tab === 'thisweek'}
+								{INRCurrency(weekTotalIncome)}
+							{:else if active_tab === 'thismonth'}
+								{INRCurrency(monthTotalIncome)}
+							{:else if active_tab === 'calender'}
+								{INRCurrency(calenderTotalIncome2 ? calenderTotalIncome2 : 0)}
+							{/if}
+						</span>
+					</div>
+					{#if active_tab === 'today'}
+						<DashboardData Datas={todayIDatas} />
+					{/if}
 
-<!-- <a href="/income"><button>add insert</button></a> -->
+					{#if active_tab == 'thisweek'}
+						<DashboardData Datas={weekIDatas} />
+					{/if}
+					{#if active_tab == 'thismonth'}
+						<DashboardData Datas={monthIDatas} />
+					{/if}
+					{#if active_tab == 'calender'}
+						<DashboardData Datas={calenderIdata2} />
+					{/if}
+				</Card.Content>
+			</Card.Root>
+		</Tabs.Content>
+		<Tabs.Content value="Expense">
+			<Card.Root class="">
+				<Card.Content class="p-0 py-6">
+					<div
+						class="expense-container text-s m-auto flex h-[12vh] w-[85vw] flex-col items-center justify-center rounded-lg bg-black text-slate-300"
+					>
+						Expense so far
+						<span class=" text-3xl text-white">
+							{#if active_tab === 'today'}
+								{INRCurrency(dayTotalExpense)}
+							{:else if active_tab == 'thisweek'}
+								{INRCurrency(weekTotalExpense)}
+							{:else if active_tab === 'thismonth'}
+								{INRCurrency(monthTotalExpense)}
+							{:else if active_tab === 'calender'}
+								{INRCurrency(calenderTotalExpense2 ? calenderTotalExpense2 : 0)}
+							{/if}
+						</span>
+					</div>
+					{#if active_tab === 'today'}
+						<DashboardData Datas={todayEDatas} />
+					{/if}
 
-<Tabs.Root value="Income" class="m-auto mb-[7rem] mt-4 w-[95vw]">
-	<Tabs.List class="grid h-fit w-full grid-cols-2 rounded-3xl ">
-		<Tabs.Trigger
-			value="Income"
-			class="rounded-3xl p-2 data-[state=active]:bg-black data-[state=active]:text-slate-200"
-			>Income</Tabs.Trigger
-		>
-		<Tabs.Trigger
-			value="Expense"
-			class="rounded-3xl p-2 data-[state=active]:bg-black data-[state=active]:text-slate-200"
-			>Expense</Tabs.Trigger
-		>
-	</Tabs.List>
-	<Tabs.Content value="Income">
-		<Card.Root class="">
-			<Card.Content class="p-0 py-6">
-				<div
-					class="expense-container text-s m-auto flex h-[12vh] w-[85vw] flex-col items-center justify-center rounded-lg bg-black text-slate-300"
-				>
-					Income so far
-					<span class=" text-3xl text-white">
-						{#if active_tab === 'today'}
-							{INRCurrency(dayTotalIncome)}
-						{:else if active_tab === 'thisweek'}
-							{INRCurrency(weekTotalIncome)}
-						{:else if active_tab === 'thismonth'}
-							{INRCurrency(monthTotalIncome)}
-						{:else if active_tab === 'calender'}
-							{INRCurrency(calenderTotalIncome2 ? calenderTotalIncome2 : 0)}
-						{/if}
-					</span>
-				</div>
-				{#if active_tab === 'today'}
-					<DashboardData Datas={todayIDatas} />
-				{/if}
-
-				{#if active_tab == 'thisweek'}
-					<DashboardData Datas={weekIDatas} />
-				{/if}
-				{#if active_tab == 'thismonth'}
-					<DashboardData Datas={monthIDatas} />
-				{/if}
-				{#if active_tab == 'calender'}
-					<DashboardData Datas={calenderIdata2} />
-				{/if}
-			</Card.Content>
-		</Card.Root>
-	</Tabs.Content>
-	<Tabs.Content value="Expense">
-		<Card.Root class="">
-			<Card.Content class="p-0 py-6">
-				<div
-					class="expense-container text-s m-auto flex h-[12vh] w-[85vw] flex-col items-center justify-center rounded-lg bg-black text-slate-300"
-				>
-					Expense so far
-					<span class=" text-3xl text-white">
-						{#if active_tab === 'today'}
-							{INRCurrency(dayTotalExpense)}
-						{:else if active_tab == 'thisweek'}
-							{INRCurrency(weekTotalExpense)}
-						{:else if active_tab === 'thismonth'}
-							{INRCurrency(monthTotalExpense)}
-						{:else if active_tab === 'calender'}
-							{INRCurrency(calenderTotalExpense2 ? calenderTotalExpense2 : 0)}
-						{/if}
-					</span>
-				</div>
-				{#if active_tab === 'today'}
-					<DashboardData Datas={todayEDatas} />
-				{/if}
-
-				{#if active_tab == 'thisweek'}
-					<DashboardData Datas={weekEDatas} />
-				{/if}
-				{#if active_tab === 'thismonth'}
-					<DashboardData Datas={monthEDatas} />
-				{/if}
-				{#if active_tab === 'calender'}
-					<DashboardData Datas={calenderEdata2} />
-				{/if}
-			</Card.Content>
-		</Card.Root>
-	</Tabs.Content>
-</Tabs.Root>
-
+					{#if active_tab == 'thisweek'}
+						<DashboardData Datas={weekEDatas} />
+					{/if}
+					{#if active_tab === 'thismonth'}
+						<DashboardData Datas={monthEDatas} />
+					{/if}
+					{#if active_tab === 'calender'}
+						<DashboardData Datas={calenderEdata2} />
+					{/if}
+				</Card.Content>
+			</Card.Root>
+		</Tabs.Content>
+	</Tabs.Root>
+{/if}
 <Navbar />
 
 <style>
