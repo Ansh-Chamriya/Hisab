@@ -11,7 +11,9 @@
 </script>
 
 {#if $navigating}
-	<div class="flex h-[25vh] w-[25vw] animate-spin items-center justify-center">😊</div>
+	<div class="flex h-[100vh] w-[100vw] animate-spin items-center justify-center">
+		<span class="h-[15vh] w-[15vw]">😊</span>
+	</div>
 {:else}
 	<div class=" p-5">
 		<h1 class="mb-8 mt-14 text-4xl font-bold">Insights</h1>

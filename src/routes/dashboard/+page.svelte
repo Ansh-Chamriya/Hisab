@@ -98,7 +98,9 @@
 </script>
 
 {#if $navigating}
-	<div class="flex h-[25vh] w-[25vw] animate-spin items-center justify-center">😊</div>
+	<div class="flex h-[25vh] w-[25vw] animate-spin items-center justify-center">
+		<span class="h-[15vh] w-[15vw]">😊</span>
+	</div>
 {:else}
 	<nav>
 		<div class="mt-4 flex p-2">
@@ -236,9 +238,8 @@
 			</Card.Root>
 		</Tabs.Content>
 	</Tabs.Root>
-
-	<Navbar />
 {/if}
+<Navbar />
 
 <style>
 	:global(body) {
