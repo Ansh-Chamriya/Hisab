@@ -132,7 +132,7 @@
 
 			<div class="my-4">
 				<Label for="qty" class="">Quantity</Label>
-				<Input type="text" name="qty{i}" id="qty{i}" bind:value={value.qty} class="bg-slate-50" />
+				<Input type="number" name="qty{i}" id="qty{i}" bind:value={value.qty} class="bg-slate-50" />
 			</div>
 		{/each}
 		<div class="mt-8 flex justify-between px-4">

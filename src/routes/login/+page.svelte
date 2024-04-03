@@ -2,7 +2,6 @@
 	export let data;
 	import * as Card from '$lib/components/ui/card';
 	import { Button } from '$lib/components/ui/button';
-	import { PUBLIC_DATABASE_ANON_KEY } from '$env/static/public';
 	let { supabase } = data;
 
 	async function signInWithGoogle() {

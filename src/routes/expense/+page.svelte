@@ -63,14 +63,14 @@
 		</div>
 		<div class="my-4">
 			<Label for="price">Price</Label>
-			<Input type="text" id="price" name="price" class="bg-slate-50" />
+			<Input type="number" id="price" name="price" class="bg-slate-50" />
 		</div>
 		<div class="my-4">
 			<Label for="qty">Quantity</Label>
 			{#if otherValue.toUpperCase() == 'CASH' || otherValue.toUpperCase() == 'SAMAN'}
-				<Input type="text" name="qty" id="qty" disabled class="bg-slate-50" />
+				<Input type="number" name="qty" id="qty" disabled class="bg-slate-50" />
 			{:else}
-				<Input type="text" name="qty" id="qty" class="bg-slate-50" />
+				<Input type="number" name="qty" id="qty" class="bg-slate-50" />
 			{/if}
 		</div>
 		<Button type="submit" class="mt-6 w-full p-5">Submit</Button>
