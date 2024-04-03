@@ -8,10 +8,7 @@
 	import Input from '$lib/components/ui/input/input.svelte';
 	import Label from '$lib/components/ui/label/label.svelte';
 	import { navigating } from '$app/stores';
-<<<<<<< HEAD
 	import { Jumper } from 'svelte-loading-spinners';
-=======
->>>>>>> 3fd0d1e7eab5356360bf8e6c80989f322439c9f6
 
 	function handleClick() {
 		toast.success('Data Added Succesfully');
@@ -53,13 +50,8 @@
 </script>
 
 {#if $navigating}
-<<<<<<< HEAD
 	<div class="flex h-full w-full items-center justify-center">
 		<Jumper size="80" color="#000000" unit="px" duration="1s" />
-=======
-	<div class="flex h-[25vh] w-[25vw] animate-spin items-center justify-center">
-		<span class="h-[15vh] w-[15vw]">😊</span>
->>>>>>> 3fd0d1e7eab5356360bf8e6c80989f322439c9f6
 	</div>
 {:else}
 	<Toaster />
@@ -148,9 +140,6 @@
 
 				<div class="my-4">
 					<Label for="qty" class="">Quantity</Label>
-<<<<<<< HEAD
-					<Input type="text" name="qty{i}" id="qty{i}" bind:value={value.qty} class="bg-slate-50" />
-=======
 					<Input
 						type="number"
 						name="qty{i}"
@@ -158,7 +147,6 @@
 						bind:value={value.qty}
 						class="bg-slate-50"
 					/>
->>>>>>> 3fd0d1e7eab5356360bf8e6c80989f322439c9f6
 				</div>
 			{/each}
 			<div class="mt-8 flex justify-between px-4">
@@ -169,8 +157,4 @@
 		</form>
 	</div>
 {/if}
-<<<<<<< HEAD
-=======
-
->>>>>>> 3fd0d1e7eab5356360bf8e6c80989f322439c9f6
 <Navbar />

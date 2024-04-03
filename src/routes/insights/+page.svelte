@@ -5,24 +5,16 @@
 	import { Badge } from '$lib/components/ui/badge';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { navigating } from '$app/stores';
-<<<<<<< HEAD
 	import { Jumper } from 'svelte-loading-spinners';
 
-=======
->>>>>>> 3fd0d1e7eab5356360bf8e6c80989f322439c9f6
 	let activeTab = 'week';
 	const weeklyinsightdata = data.Insightdata[0];
 	const monthlyinsightdata = data.Insightdata[1];
 </script>
 
 {#if $navigating}
-<<<<<<< HEAD
 	<div class="flex h-full w-full items-center justify-center">
 		<Jumper size="80" color="#000000" unit="px" duration="1s" />
-=======
-	<div class="flex h-[100vh] w-[100vw] animate-spin items-center justify-center">
-		<span class="h-[15vh] w-[15vw]">😊</span>
->>>>>>> 3fd0d1e7eab5356360bf8e6c80989f322439c9f6
 	</div>
 {:else}
 	<div class=" p-5">

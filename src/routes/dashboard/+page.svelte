@@ -98,18 +98,23 @@
 	});
 </script>
 
-<nav>
-	<div class="mt-4 flex p-2">
-		<Avatar.Root class="mr-6 size-[3.25rem]">
-			<Avatar.Image src={avatarUrl} alt="userImage" />
-			<Avatar.Fallback>CN</Avatar.Fallback>
-		</Avatar.Root>
-		<div class="">
-			<h1 class="mb-1 translate-y-1 text-[1.25rem] font-bold">Welcome, {name}</h1>
-			<p class="text-bold text-xs text-slate-600">Don't worry, here is your buddy</p>
-		</div>
+{#if $navigating}
+	<div class="flex h-full w-full items-center justify-center">
+		<Jumper size="80" color="#000000" unit="px" duration="1s" />
 	</div>
-</nav>
+{:else}
+	<nav>
+		<div class="mt-4 flex p-2">
+			<Avatar.Root class="mr-6 size-[3.25rem]">
+				<Avatar.Image src={avatarUrl} alt="userImage" />
+				<Avatar.Fallback>CN</Avatar.Fallback>
+			</Avatar.Root>
+			<div class="">
+				<h1 class="mb-1 translate-y-1 text-[1.25rem] font-bold">Welcome, {name}</h1>
+				<p class="text-bold text-xs text-slate-600">Don't worry, here is your buddy</p>
+			</div>
+		</div>
+	</nav>
 
 	<div class="filter-container m-auto mt-4 w-fit">
 		<Button
