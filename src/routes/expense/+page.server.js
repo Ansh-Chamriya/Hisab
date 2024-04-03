@@ -1,11 +1,18 @@
 import supabase from '$lib/supabaseClient';
 import { error } from '@sveltejs/kit';
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+
 export const actions = {
 	create: async (event) => {
+		dayjs.extend(utc);
+		dayjs.extend(timezone);
 		const formData = await event.request.formData();
-		const date = dayjs(new Date()).hour(12);
-		const time = new Date().toString().slice(16, 25);
+		const d = dayjs().utc().local();
+		const t = dayjs().utc().local();
+		const date = dayjs.tz(d, 'Asia/Kolkata').format();
+		const time = dayjs.tz(t, 'Asia/Kolkata').format('hh:mm:ss');
 		let article = formData.get('article');
 		let otherArticle = formData.get('otherArticle');
 		otherArticle =
