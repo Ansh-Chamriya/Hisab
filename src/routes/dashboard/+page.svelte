@@ -16,6 +16,7 @@
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import Navbar from '$lib/Navbar.svelte';
+	import { navigating } from '$app/stores';
 	$: isActive = null;
 	$: isBActive = null;
 	// today || "thisweek" || "thismonth" || "calender"
@@ -94,28 +95,10 @@
 	onMount(() => {
 		canRun = true;
 	});
-	// const searchParams = new URLSearchParams('start=null&end=null');
-
-	// function go() {
-	// 	if (dateValues.start && dateValues.end) {
-	// 		const start = new Date(dateValues.start.year, dateValues.start.month, dateValues.start.day);
-	// 		const end = new Date(dateValues.end.year, dateValues.end.month, dateValues.end.day);
-	// 		searchParams.set('start', start.toLocaleDateString());
-	// 		searchParams.set('end', end.toLocaleDateString());
-	// 		goto(`?${searchParams.toString()}`);
-	// 		console.log(start.toLocaleDateString());
-	// 		console.log(end.toLocaleDateString());
-	// 	}
-	// }
-	// $: go();
-	// $: docs = $page.url.searchParams.get('docs') === 'true';
-	// $: site = parseInt($page.url.searchParams.get('page')?.toString() || '0');
-	// $: console.log(dateValues);
-	// console.log(dateValues.start.day, dateValues.end.month);
 </script>
 
-{#if !data}
-	<Skeleton class="h-52 w-52 rounded-full" />
+{#if $navigating}
+	<div class="flex h-[25vh] w-[25vw] animate-spin items-center justify-center">😊</div>
 {:else}
 	<nav>
 		<div class="mt-4 flex p-2">

@@ -12,7 +12,7 @@
 </script>
 
 {#if isLoading}
-	<Skeleton class="h-52 w-52 rounded-full" />
+	<div class="flex h-[25vh] w-[25vw] animate-spin items-center justify-center">😊</div>
 {:else}
 	<div class=" mt-4 font-bold text-slate-600">
 		<span class="mb-6 ml-5">Today, {date}</span>
