@@ -2,18 +2,14 @@
 	export let data;
 	import dayjs from 'dayjs';
 	import * as Avatar from '$lib/components/ui/avatar';
-	import { Skeleton } from '$lib/components/ui/skeleton';
 	import { Button } from '$lib/components/ui/button';
+	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import * as Tabs from '$lib/components/ui/tabs';
 	import * as Card from '$lib/components/ui/card';
 	import DashboardData from '$lib/DashboardData.svelte';
-	import * as Drawer from '$lib/components/ui/drawer';
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { RangeCalendar } from '$lib/components/ui/range-calendar';
 	import { today, getLocalTimeZone } from '@internationalized/date';
 	import * as Popover from '$lib/components/ui/popover';
-	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import Navbar from '$lib/Navbar.svelte';
 	import { navigating } from '$app/stores';
@@ -105,10 +101,25 @@
 {:else}
 	<nav>
 		<div class="mt-4 flex p-2">
-			<Avatar.Root class="mr-6 size-[3.25rem]">
-				<Avatar.Image src={avatarUrl} alt="userImage" />
-				<Avatar.Fallback>CN</Avatar.Fallback>
-			</Avatar.Root>
+			<Dialog.Root>
+				<Dialog.Trigger>
+					<Avatar.Root class="mr-6 size-[3.25rem]">
+						<Avatar.Image src={avatarUrl} alt="userImage" />
+						<Avatar.Fallback>CN</Avatar.Fallback>
+					</Avatar.Root>
+				</Dialog.Trigger>
+				<Dialog.Content class="sm:max-w-[425px]">
+					<Dialog.Header>
+						<Dialog.Title>Edit profile</Dialog.Title>
+						<Dialog.Description>
+							Make changes to your profile here. Click save when you're done.
+						</Dialog.Description>
+					</Dialog.Header>
+					<Dialog.Footer>
+						<Button variant="destructive">Logout</Button>
+					</Dialog.Footer>
+				</Dialog.Content>
+			</Dialog.Root>
 			<div class="">
 				<h1 class="mb-1 translate-y-1 text-[1.25rem] font-bold">Welcome, {name}</h1>
 				<p class="text-bold text-xs text-slate-600">Don't worry, here is your buddy</p>
