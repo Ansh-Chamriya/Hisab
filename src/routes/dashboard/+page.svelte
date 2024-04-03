@@ -17,6 +17,8 @@
 	import { onMount } from 'svelte';
 	import Navbar from '$lib/Navbar.svelte';
 	import { navigating } from '$app/stores';
+	import { Jumper } from 'svelte-loading-spinners';
+
 	$: isActive = null;
 	$: isBActive = null;
 	// today || "thisweek" || "thismonth" || "calender"
@@ -98,9 +100,7 @@
 </script>
 
 {#if $navigating}
-	<div class="flex h-[25vh] w-[25vw] animate-spin items-center justify-center">
-		<span class="h-[15vh] w-[15vw]">😊</span>
-	</div>
+	<Jumper size="60" color="#FF3E00" unit="px" duration="1s" />
 {:else}
 	<nav>
 		<div class="mt-4 flex p-2">
