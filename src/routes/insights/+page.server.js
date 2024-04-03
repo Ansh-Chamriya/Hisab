@@ -3,10 +3,14 @@ import supabase from '$lib/supabaseClient';
 import { redirect } from '@sveltejs/kit';
 import utc from 'dayjs/plugin/utc';
 import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
 
 export async function load(event) {
 	const userSession = await event.locals.getSession();
+	dayjs.extend(timezone);
 	dayjs.extend(utc);
+	const d = dayjs().utc().local();
+
 	if (!userSession) {
 		throw redirect(301, '/login');
 	}
@@ -27,62 +31,62 @@ export async function load(event) {
 		supabase.rpc('weekly_Income_Insights', {
 			articlename: 'Idli-khiru',
 			userid: userSession.user.id,
-			cdate: dayjs().utc().local().format()
+			cdate: dayjs.tz(d, 'Asia/Kolkata').format()
 		}),
 		supabase.rpc('weekly_Income_Insights', {
 			articlename: 'Chutney',
 			userid: userSession.user.id,
-			cdate: dayjs().utc().local().format()
+			cdate: dayjs.tz(d, 'Asia/Kolkata').format()
 		}),
 		supabase.rpc('weekly_Income_Insights', {
 			articlename: 'Menduvada-khiru',
 			userid: userSession.user.id,
-			cdate: dayjs().utc().local().format()
+			cdate: dayjs.tz(d, 'Asia/Kolkata').format()
 		}),
 		supabase.rpc('monthly_Income_insights', {
 			articlename: 'Idli-khiru',
 			userid: userSession.user.id,
-			cdate: dayjs().utc().local().format()
+			cdate: dayjs.tz(d, 'Asia/Kolkata').format()
 		}),
 		supabase.rpc('monthly_Income_insights', {
 			articlename: 'Chutney',
 			userid: userSession.user.id,
-			cdate: dayjs().utc().local().format()
+			cdate: dayjs.tz(d, 'Asia/Kolkata').format()
 		}),
 		supabase.rpc('monthly_Income_insights', {
 			articlename: 'Menduvada-khiru',
 			userid: userSession.user.id,
-			cdate: dayjs().utc().local().format()
+			cdate: dayjs.tz(d, 'Asia/Kolkata').format()
 		}),
 		supabase.rpc('weekarticletotal', {
 			articlename: 'Idli-khiru',
 			userid: userSession.user.id,
-			cdate: dayjs().utc().local().format()
+			cdate: dayjs.tz(d, 'Asia/Kolkata').format()
 		}),
 		supabase.rpc('weekarticletotal', {
 			articlename: 'Chutney',
 			userid: userSession.user.id,
-			cdate: dayjs().utc().local().format()
+			cdate: dayjs.tz(d, 'Asia/Kolkata').format()
 		}),
 		supabase.rpc('weekarticletotal', {
 			articlename: 'Menduvada-khiru',
 			userid: userSession.user.id,
-			cdate: dayjs().utc().local().format()
+			cdate: dayjs.tz(d, 'Asia/Kolkata').format()
 		}),
 		supabase.rpc('montharticletotal', {
 			articlename: 'Idli-khiru',
 			userid: userSession.user.id,
-			cdate: dayjs().utc().local().format()
+			cdate: dayjs.tz(d, 'Asia/Kolkata').format()
 		}),
 		supabase.rpc('montharticletotal', {
 			articlename: 'Chutney',
 			userid: userSession.user.id,
-			cdate: dayjs().utc().local().format()
+			cdate: dayjs.tz(d, 'Asia/Kolkata').format()
 		}),
 		supabase.rpc('montharticletotal', {
 			articlename: 'Menduvada-khiru',
 			userid: userSession.user.id,
-			cdate: dayjs().utc().local().format()
+			cdate: dayjs.tz(d, 'Asia/Kolkata').format()
 		})
 	]);
 	// const { data: IdliInsight, error } = await supabase.rpc('weekly_Income_Insights', {
