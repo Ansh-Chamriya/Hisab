@@ -7,7 +7,7 @@ export const actions = {
 		dayjs.extend(utc);
 		const formData = await event.request.formData();
 		const date = dayjs().utc().local();
-		const time = dayjs().utc().local().format('hh:mm:ss').toString();
+		const time = dayjs().utc().local().format('hh:mm:ss');
 
 		let article = formData.get('article');
 		let otherArticle = formData.get('otherArticle');
