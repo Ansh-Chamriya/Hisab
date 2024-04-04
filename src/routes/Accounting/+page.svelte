@@ -8,6 +8,10 @@
 	import saveAs from 'file-saver';
 	let AccCalenderEdata2;
 	let AccCalenderIdata2;
+	for (let i = 0, j = 0; i < AccCalenderEdata2.length, j < AccCalenderIdata2.length; i++, j++) {
+		AccCalenderEdata2[i] = Object.values(AccCalenderEdata2[i]);
+		AccCalenderIdata2[j] = Object.values(AccCalenderIdata2[j]);
+	}
 	const start = today(getLocalTimeZone());
 	const end = today(getLocalTimeZone()).add({ days: 7 });
 	let dateValues = {
@@ -20,18 +24,22 @@
 		const workbook = new ExcelJS.Workbook();
 		const IncomeWorksheet = workbook.addWorksheet('Income Worksheet');
 		const ExpenseWorksheet = workbook.addWorksheet('Expense Worksheet');
-		Incomedata.forEach((row, index) => {
-			IncomeWorksheet.addRow({
-				id: index + 1,
-				...row
-			});
-		});
-		Expensedata.forEach((row, index) => {
-			ExpenseWorksheet.addRow({
-				id: index + 1,
-				...row
-			});
-		});
+		// Incomedata.forEach((row, index) => {
+		// 	IncomeWorksheet.addRow({
+		// 		id: index + 1,
+		// 		...row
+		// 	});
+		// });
+		// Expensedata.forEach((row, index) => {
+		// 	ExpenseWorksheet.addRow({
+		// 		id: index + 1,
+		// 		...row
+		// 	});
+		// });
+		IncomeWorksheet.addRow(['article,price,qty,time,date']);
+		ExpenseWorksheet.addRow(['article,price,qty,time,date']);
+		IncomeWorksheet.addRows(Incomedata);
+		ExpenseWorksheet.addRows(Expensedata);
 		const workbookBlob = await workbook.xlsx.writeBuffer();
 
 		const blob = new Blob([workbookBlob], {
