@@ -7,6 +7,7 @@
 	import ExcelJS from 'exceljs';
 	import saveAs from 'file-saver';
 	import { onMount } from 'svelte';
+	import toast, { Toaster } from 'svelte-french-toast';
 	let AccCalenderEdata2;
 	let AccCalenderIdata2;
 	$: console.log(dateValues);
@@ -21,7 +22,11 @@
 
 	$: {
 		if (canRun && dateValues.start) {
-			getCalenderIncome();
+			toast.promise(getCalenderIncome(), {
+				loading: 'Loading...',
+				success: 'Data Loaded Succesfully!!!',
+				error: 'Some Error Occured. Please Try Again.'
+			});
 		}
 	}
 	onMount(() => {
@@ -60,29 +65,31 @@
 		if (dateValues.start && dateValues.end) {
 			const start = dateValues.start.toLocaleString();
 			const end = dateValues.end.toLocaleString();
-			const response = await fetch('/Accounting', {
-				method: 'POST',
-				body: JSON.stringify({
-					start: start,
-					end: end,
-					userid: userId,
-					dateValues: dateValues
-				}),
-				headers: {
-					'Content-Type': 'application/json'
+			try {
+				const response = await fetch('/Accounting', {
+					method: 'POST',
+					body: JSON.stringify({
+						start: start,
+						end: end,
+						userid: userId,
+						dateValues: dateValues
+					}),
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				});
+				const { AccCalenderIdata, AccCalenderEdata } = await response.json();
+				AccCalenderEdata2 = AccCalenderEdata;
+				AccCalenderIdata2 = AccCalenderIdata;
+				for (let i = 0; i < AccCalenderEdata2?.length; i++) {
+					AccCalenderEdata2[i] = Object.values(AccCalenderEdata2[i]);
 				}
-			});
-			const { AccCalenderIdata, AccCalenderEdata } = await response.json();
-			AccCalenderEdata2 = AccCalenderEdata;
-			AccCalenderIdata2 = AccCalenderIdata;
-			console.log(start, end);
-			console.log('Before Expense', AccCalenderEdata2);
-			console.log('Before Income', AccCalenderIdata2);
-			for (let i = 0; i < AccCalenderEdata2?.length; i++) {
-				AccCalenderEdata2[i] = Object.values(AccCalenderEdata2[i]);
-			}
-			for (let j = 0; j < AccCalenderIdata2?.length; j++) {
-				AccCalenderIdata2[j] = Object.values(AccCalenderIdata2[j]);
+				for (let j = 0; j < AccCalenderIdata2?.length; j++) {
+					AccCalenderIdata2[j] = Object.values(AccCalenderIdata2[j]);
+				}
+			} catch (error) {
+				console.log(error);
+				toast.error('Error Loading Data');
 			}
 			console.log('After Expense', AccCalenderEdata2);
 			console.log('After Income', AccCalenderIdata2);
@@ -90,7 +97,7 @@
 	}
 </script>
 
-<div class="flex flex-col items-center justify-center">
+<div class="flex h-full flex-col items-center justify-center">
 	<RangeCalendar
 		bind:value={dateValues}
 		on:click={getCalenderIncome}
