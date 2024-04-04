@@ -60,7 +60,7 @@
 		if (dateValues.start && dateValues.end) {
 			const start = dateValues.start.toLocaleString();
 			const end = dateValues.end.toLocaleString();
-			const response = await fetch('/accounting', {
+			const response = await fetch('/Accounting', {
 				method: 'POST',
 				body: JSON.stringify({
 					start: start,
