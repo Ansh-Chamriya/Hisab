@@ -15,6 +15,7 @@
 	import Navbar from '$lib/Navbar.svelte';
 	import { navigating } from '$app/stores';
 	import { Jumper } from 'svelte-loading-spinners';
+	import * as Drawer from '$lib/components/ui/drawer/index.js';
 	$: isActive = null;
 	$: isBActive = null;
 	// today || "thisweek" || "thismonth" || "calender"
@@ -107,25 +108,29 @@
 {:else}
 	<nav>
 		<div class="mt-4 flex p-2">
-			<Dialog.Root>
-				<Dialog.Trigger>
-					<Avatar.Root class="mr-6 size-[3.25rem]">
+			<Drawer.Root>
+				<Drawer.Trigger asChild let:builder>
+					<Avatar.Root builders={[builder]} class="mr-6 size-[3.25rem]">
 						<Avatar.Image src={avatarUrl} alt="userImage" />
 						<Avatar.Fallback>CN</Avatar.Fallback>
 					</Avatar.Root>
-				</Dialog.Trigger>
-				<Dialog.Content class="sm:max-w-[425px]">
-					<Dialog.Header>
-						<Dialog.Title>Edit profile</Dialog.Title>
-						<Dialog.Description>
+				</Drawer.Trigger>
+				<Drawer.Content class="sm:max-w-[425px]">
+					<Drawer.Header>
+						<Drawer.Title>Edit profile</Drawer.Title>
+						<Drawer.Description>
 							Make changes to your profile here. Click save when you're done.
-						</Dialog.Description>
-					</Dialog.Header>
-					<Dialog.Footer>
+						</Drawer.Description>
+					</Drawer.Header>
+					<a href="/Accounting"><Button>Accounting</Button></a>
+					<Drawer.Footer>
 						<Button variant="destructive" on:click={logout}>Logout</Button>
-					</Dialog.Footer>
-				</Dialog.Content>
-			</Dialog.Root>
+						<Drawer.Close asChild let:builder>
+							<Button builders={[builder]} variant="outline">Cancel</Button>
+						</Drawer.Close>
+					</Drawer.Footer>
+				</Drawer.Content>
+			</Drawer.Root>
 			<div class="">
 				<h1 class="mb-1 translate-y-1 text-[1.25rem] font-bold">Welcome, {name}</h1>
 				<p class="text-bold text-xs text-slate-600">Don't worry, here is your buddy</p>
