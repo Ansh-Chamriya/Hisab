@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
 	export let data;
 	import { getLocalTimeZone, today } from '@internationalized/date';
 	import { RangeCalendar } from '$lib/components/ui/range-calendar/index.js';
@@ -86,11 +86,12 @@
 	}
 </script>
 
-<div class="flex items-center justify-center"></div>
-<RangeCalendar
-	bind:value={dateValues}
-	on:click={getCalenderIncome}
-	class="mb-5 rounded-md border shadow"
-/>
-<Button on:click={exportToExcel}>Download Excel</Button>
+<div class="flex items-center justify-center">
+	<RangeCalendar
+		bind:value={dateValues}
+		on:click={getCalenderIncome}
+		class="mb-5 rounded-md border shadow"
+	/>
+	<Button on:click={exportToExcel}>Download Excel</Button>
+</div>
 <Navbar />
