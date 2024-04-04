@@ -22,11 +22,7 @@
 
 	$: {
 		if (canRun && dateValues.start) {
-			toast.promise(getCalenderIncome(), {
-				loading: 'Loading...',
-				success: 'Data Loaded Succesfully!!!',
-				error: 'Some Error Occured. Please Try Again.'
-			});
+			getCalenderIncome();
 		}
 	}
 	onMount(() => {
@@ -87,6 +83,7 @@
 				for (let j = 0; j < AccCalenderIdata2?.length; j++) {
 					AccCalenderIdata2[j] = Object.values(AccCalenderIdata2[j]);
 				}
+				toast.success('Data Loaded Successfully');
 			} catch (error) {
 				console.log(error);
 				toast.error('Error Loading Data');
