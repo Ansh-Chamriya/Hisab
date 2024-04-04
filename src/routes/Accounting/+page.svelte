@@ -68,6 +68,8 @@
 				AccCalenderEdata2[i] = Object.values(AccCalenderEdata2[i]);
 				AccCalenderIdata2[j] = Object.values(AccCalenderIdata2[j]);
 			}
+			console.log('Expense', AccCalenderEdata2);
+			console.log('Income', AccCalenderIdata2);
 		}
 	}
 </script>
