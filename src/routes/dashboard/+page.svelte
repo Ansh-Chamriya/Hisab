@@ -109,26 +109,28 @@
 	<nav>
 		<div class="mt-4 flex p-2">
 			<Drawer.Root>
-				<Drawer.Trigger asChild let:builder>
-					<Avatar.Root builders={[builder]} class="mr-6 size-[3.25rem]">
+				<Drawer.Trigger>
+					<Avatar.Root class="mr-6 size-[3.25rem]">
 						<Avatar.Image src={avatarUrl} alt="userImage" />
 						<Avatar.Fallback>CN</Avatar.Fallback>
 					</Avatar.Root>
 				</Drawer.Trigger>
 				<Drawer.Content class="sm:max-w-[425px]">
-					<Drawer.Header>
-						<Drawer.Title>Edit profile</Drawer.Title>
-						<Drawer.Description>
-							Make changes to your profile here. Click save when you're done.
-						</Drawer.Description>
-					</Drawer.Header>
-					<a href="/Accounting"><Button>Accounting</Button></a>
-					<Drawer.Footer>
-						<Button variant="destructive" on:click={logout}>Logout</Button>
-						<Drawer.Close asChild let:builder>
-							<Button builders={[builder]} variant="outline">Cancel</Button>
-						</Drawer.Close>
-					</Drawer.Footer>
+					<div class="mx-auto w-full max-w-sm">
+						<Drawer.Header>
+							<Drawer.Title>Edit profile</Drawer.Title>
+							<Drawer.Description>
+								Make changes to your profile here. Click save when you're done.
+							</Drawer.Description>
+						</Drawer.Header>
+						<a href="/Accounting"><Button>Accounting</Button></a>
+						<Drawer.Footer>
+							<Button variant="destructive" on:click={logout}>Logout</Button>
+							<Drawer.Close>
+								<Button variant="outline">Cancel</Button>
+							</Drawer.Close>
+						</Drawer.Footer>
+					</div>
 				</Drawer.Content>
 			</Drawer.Root>
 			<div class="">
