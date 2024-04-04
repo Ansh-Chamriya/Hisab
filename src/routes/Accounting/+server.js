@@ -16,7 +16,7 @@ export async function POST({ request }) {
 		.eq('user_id', userid)
 		.gte('date', start)
 		.lte('date', end);
-
+	console.log(calenderIdata, calenderEdata);
 	return json({
 		AccCalenderIdata: calenderIdata,
 		AccCalenderEdata: calenderEdata
