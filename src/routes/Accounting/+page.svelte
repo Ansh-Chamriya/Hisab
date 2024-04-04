@@ -8,10 +8,7 @@
 	import saveAs from 'file-saver';
 	let AccCalenderEdata2;
 	let AccCalenderIdata2;
-	for (let i = 0, j = 0; i < AccCalenderEdata2.length, j < AccCalenderIdata2.length; i++, j++) {
-		AccCalenderEdata2[i] = Object.values(AccCalenderEdata2[i]);
-		AccCalenderIdata2[j] = Object.values(AccCalenderIdata2[j]);
-	}
+
 	const start = today(getLocalTimeZone());
 	const end = today(getLocalTimeZone()).add({ days: 7 });
 	let dateValues = {
@@ -66,6 +63,11 @@
 			const { AccCalenderIdata, AccCalenderEdata } = await response.json();
 			AccCalenderEdata2 = AccCalenderEdata;
 			AccCalenderIdata2 = AccCalenderIdata;
+
+			for (let i = 0, j = 0; i < AccCalenderEdata2.length, j < AccCalenderIdata2.length; i++, j++) {
+				AccCalenderEdata2[i] = Object.values(AccCalenderEdata2[i]);
+				AccCalenderIdata2[j] = Object.values(AccCalenderIdata2[j]);
+			}
 		}
 	}
 </script>
