@@ -46,6 +46,8 @@
 		"dayjs": "^1.11.10",
 		"dotenv": "^16.4.1",
 		"drizzle-orm": "^0.29.3",
+		"exceljs": "^4.4.0",
+		"file-saver": "^2.0.5",
 		"firebase": "^10.9.0",
 		"geist": "^1.2.2",
 		"lucide-svelte": "^0.350.0",

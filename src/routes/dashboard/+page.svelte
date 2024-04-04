@@ -37,15 +37,11 @@
 	const { session, supabase } = data;
 	const avatarUrl = session.user.user_metadata.avatar_url;
 	const name = session.user.user_metadata.full_name;
-	const date = new Date().toString().slice(0, 10);
 	let dateValues = {
 		start: today(getLocalTimeZone()),
 		end: today(getLocalTimeZone()).add({ days: 7 })
 	};
 
-	// console.log('d atsss', dateValues);
-
-	// $: console.log(dateValues.end);
 	async function logout() {
 		await supabase.auth.signOut();
 

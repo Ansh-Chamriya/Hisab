@@ -1,5 +1,72 @@
-<script>
+<script lang="ts">
 	export let data;
+	import { getLocalTimeZone, today } from '@internationalized/date';
+	import { RangeCalendar } from '$lib/components/ui/range-calendar/index.js';
+	import Navbar from '$lib/Navbar.svelte';
+	import { Button } from '$lib/components/ui/button';
+	import ExcelJS from 'exceljs';
+	import saveAs from 'file-saver';
+	let AccCalenderEdata2;
+	let AccCalenderIdata2;
+	const start = today(getLocalTimeZone());
+	const end = today(getLocalTimeZone()).add({ days: 7 });
+	let dateValues = {
+		start,
+		end
+	};
+	async function exportToExcel() {
+		let Incomedata = AccCalenderIdata2;
+		let Expensedata = AccCalenderEdata2;
+		const workbook = new ExcelJS.Workbook();
+		const IncomeWorksheet = workbook.addWorksheet('Income Worksheet');
+		const ExpenseWorksheet = workbook.addWorksheet('Expense Worksheet');
+		Incomedata.forEach((row, index) => {
+			IncomeWorksheet.addRow({
+				id: index + 1,
+				...row
+			});
+		});
+		Expensedata.forEach((row, index) => {
+			ExpenseWorksheet.addRow({
+				id: index + 1,
+				...row
+			});
+		});
+		const workbookBlob = await workbook.xlsx.writeBuffer();
+
+		const blob = new Blob([workbookBlob], {
+			type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+		});
+		saveAs(blob, 'Accounts.xlsx');
+	}
+	async function getCalenderIncome() {
+		if (dateValues.start && dateValues.end) {
+			const start = dateValues.start.toLocaleString();
+			const end = dateValues.end.toLocaleString();
+			const response = await fetch('/dashboard', {
+				method: 'POST',
+				body: JSON.stringify({
+					start: start,
+					end: end,
+					userid: data.user_id,
+					dateValues: dateValues
+				}),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+			const { AccCalenderIdata, AccCalenderEdata } = await response.json();
+			AccCalenderEdata2 = AccCalenderEdata;
+			AccCalenderIdata2 = AccCalenderIdata;
+		}
+	}
 </script>
 
-<h1>Accounting route</h1>
+<div class="flex items-center justify-center"></div>
+<RangeCalendar
+	bind:value={dateValues}
+	on:click={getCalenderIncome}
+	class="mb-5 rounded-md border shadow"
+/>
+<Button on:click={exportToExcel}>Download Excel</Button>
+<Navbar />
