@@ -6,8 +6,10 @@
 	import { Button } from '$lib/components/ui/button';
 	import ExcelJS from 'exceljs';
 	import saveAs from 'file-saver';
+	import { onMount } from 'svelte';
 	let AccCalenderEdata2;
 	let AccCalenderIdata2;
+	$: console.log(dateValues);
 
 	const start = today(getLocalTimeZone());
 	const end = today(getLocalTimeZone()).add({ days: 7 });
@@ -15,6 +17,16 @@
 		start,
 		end
 	};
+	let canRun = false;
+
+	$: {
+		if (canRun && dateValues.start) {
+			getCalenderIncome();
+		}
+	}
+	onMount(() => {
+		canRun = true;
+	});
 	async function exportToExcel() {
 		let Incomedata = AccCalenderIdata2;
 		let Expensedata = AccCalenderEdata2;
@@ -48,7 +60,7 @@
 		if (dateValues.start && dateValues.end) {
 			const start = dateValues.start.toLocaleString();
 			const end = dateValues.end.toLocaleString();
-			const response = await fetch('/dashboard', {
+			const response = await fetch('/accounting', {
 				method: 'POST',
 				body: JSON.stringify({
 					start: start,

@@ -119,7 +119,7 @@
 								Make changes to your profile here. Click save when you're done.
 							</Drawer.Description>
 						</Drawer.Header>
-						<a href="/Accounting"><Button>Accounting</Button></a>
+						<a href="/accounting"><Button>Accounting</Button></a>
 						<Drawer.Footer>
 							<Button variant="destructive" on:click={logout}>Logout</Button>
 							<Drawer.Close>
