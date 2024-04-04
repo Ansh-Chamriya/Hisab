@@ -45,8 +45,8 @@
 		// 		...row
 		// 	});
 		// });
-		IncomeWorksheet.addRow(['article,price,qty,time,date']);
-		ExpenseWorksheet.addRow(['article,price,qty,time,date']);
+		IncomeWorksheet.addRow(['article', 'price', 'qty', 'time', 'date']);
+		ExpenseWorksheet.addRow(['article', 'price', 'qty', 'time', 'date']);
 		IncomeWorksheet.addRows(Incomedata);
 		ExpenseWorksheet.addRows(Expensedata);
 		const workbookBlob = await workbook.xlsx.writeBuffer();
@@ -78,7 +78,11 @@
 			console.log(start, end);
 			console.log('Before Expense', AccCalenderEdata2);
 			console.log('Before Income', AccCalenderIdata2);
-			for (let i = 0, j = 0; i < AccCalenderEdata2.length, j < AccCalenderIdata2.length; i++, j++) {
+			for (
+				let i = 0, j = 0;
+				i < AccCalenderEdata2?.length, j < AccCalenderIdata2?.length;
+				i++, j++
+			) {
 				AccCalenderEdata2[i] = Object.values(AccCalenderEdata2[i]);
 				AccCalenderIdata2[j] = Object.values(AccCalenderIdata2[j]);
 			}
