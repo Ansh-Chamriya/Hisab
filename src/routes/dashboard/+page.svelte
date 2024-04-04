@@ -6,6 +6,7 @@
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import * as Tabs from '$lib/components/ui/tabs';
 	import * as Card from '$lib/components/ui/card';
+	import { goto } from '$app/navigation';
 	import DashboardData from '$lib/DashboardData.svelte';
 	import { RangeCalendar } from '$lib/components/ui/range-calendar';
 	import { today, getLocalTimeZone } from '@internationalized/date';
@@ -44,6 +45,11 @@
 	// console.log('d atsss', dateValues);
 
 	// $: console.log(dateValues.end);
+	async function logout() {
+		await supabase.auth.signOut();
+
+		goto('/', { replaceState: true });
+	}
 	const INRCurrency = (amount) => {
 		return amount.toLocaleString('en-IN', {
 			maximumFractionDigits: 2,
@@ -116,7 +122,7 @@
 						</Dialog.Description>
 					</Dialog.Header>
 					<Dialog.Footer>
-						<Button variant="destructive">Logout</Button>
+						<Button variant="destructive" on:click={logout}>Logout</Button>
 					</Dialog.Footer>
 				</Dialog.Content>
 			</Dialog.Root>
