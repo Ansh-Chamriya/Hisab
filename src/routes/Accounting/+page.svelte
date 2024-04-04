@@ -75,18 +75,20 @@
 			const { AccCalenderIdata, AccCalenderEdata } = await response.json();
 			AccCalenderEdata2 = AccCalenderEdata;
 			AccCalenderIdata2 = AccCalenderIdata;
-
+			console.log(start, end);
+			console.log('Before Expense', AccCalenderEdata2);
+			console.log('Before Income', AccCalenderIdata2);
 			for (let i = 0, j = 0; i < AccCalenderEdata2.length, j < AccCalenderIdata2.length; i++, j++) {
 				AccCalenderEdata2[i] = Object.values(AccCalenderEdata2[i]);
 				AccCalenderIdata2[j] = Object.values(AccCalenderIdata2[j]);
 			}
-			console.log('Expense', AccCalenderEdata2);
-			console.log('Income', AccCalenderIdata2);
+			console.log('After Expense', AccCalenderEdata2);
+			console.log('After Income', AccCalenderIdata2);
 		}
 	}
 </script>
 
-<div class="flex items-center justify-center">
+<div class="flex flex-col items-center justify-center">
 	<RangeCalendar
 		bind:value={dateValues}
 		on:click={getCalenderIncome}
