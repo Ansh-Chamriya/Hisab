@@ -10,13 +10,13 @@
 	let AccCalenderEdata2;
 	let AccCalenderIdata2;
 	$: console.log(dateValues);
-
 	const start = today(getLocalTimeZone());
 	const end = today(getLocalTimeZone()).add({ days: 7 });
 	let dateValues = {
 		start,
 		end
 	};
+	console.log(data.session);
 	let canRun = false;
 
 	$: {
