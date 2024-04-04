@@ -78,12 +78,10 @@
 			console.log(start, end);
 			console.log('Before Expense', AccCalenderEdata2);
 			console.log('Before Income', AccCalenderIdata2);
-			for (
-				let i = 0, j = 0;
-				i < AccCalenderEdata2?.length, j < AccCalenderIdata2?.length;
-				i++, j++
-			) {
+			for (let i = 0; i < AccCalenderEdata2?.length; i++) {
 				AccCalenderEdata2[i] = Object.values(AccCalenderEdata2[i]);
+			}
+			for (let j = 0; j < AccCalenderIdata2?.length; j++) {
 				AccCalenderIdata2[j] = Object.values(AccCalenderIdata2[j]);
 			}
 			console.log('After Expense', AccCalenderEdata2);
