@@ -10,13 +10,13 @@
 	let AccCalenderEdata2;
 	let AccCalenderIdata2;
 	$: console.log(dateValues);
+	const userId = data.session.user.id;
 	const start = today(getLocalTimeZone());
 	const end = today(getLocalTimeZone()).add({ days: 7 });
 	let dateValues = {
 		start,
 		end
 	};
-	console.log(data.session);
 	let canRun = false;
 
 	$: {
@@ -65,7 +65,7 @@
 				body: JSON.stringify({
 					start: start,
 					end: end,
-					userid: data.user_id,
+					userid: userId,
 					dateValues: dateValues
 				}),
 				headers: {

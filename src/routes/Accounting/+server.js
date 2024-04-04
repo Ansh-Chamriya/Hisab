@@ -17,7 +17,6 @@ export async function POST({ request }) {
 		.lte('date', end);
 	console.log(calenderIdata, calenderEdata);
 	console.log(error, e);
-	console.log('userId', userid);
 
 	return json({
 		AccCalenderIdata: calenderIdata,
