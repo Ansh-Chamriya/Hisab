@@ -136,7 +136,7 @@
 		</div>
 	</nav>
 
-	<div class="filter-container mt-4 flex w-fit flex-row justify-evenly gap-1 px-2">
+	<div class="filter-container mt-4 flex w-fit flex-row justify-evenly gap-2 px-2">
 		<Button
 			variant={active_tab === 'today' ? 'default' : 'secondary'}
 			on:click={() => (active_tab = 'today')}
