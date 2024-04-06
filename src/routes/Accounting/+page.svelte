@@ -8,6 +8,8 @@
 	import saveAs from 'file-saver';
 	import { onMount } from 'svelte';
 	import toast, { Toaster } from 'svelte-french-toast';
+	import { navigating } from '$app/stores';
+	import { Jumper } from 'svelte-loading-spinners';
 	let AccCalenderEdata2;
 	let AccCalenderIdata2;
 	$: console.log(dateValues);
@@ -83,10 +85,8 @@
 				for (let j = 0; j < AccCalenderIdata2?.length; j++) {
 					AccCalenderIdata2[j] = Object.values(AccCalenderIdata2[j]);
 				}
-				toast.success('Data Loaded Successfully');
 			} catch (error) {
 				console.log(error);
-				toast.error('Error Loading Data');
 			}
 			console.log('After Expense', AccCalenderEdata2);
 			console.log('After Income', AccCalenderIdata2);
@@ -94,12 +94,18 @@
 	}
 </script>
 
-<div class="flex h-full flex-col items-center justify-center">
-	<RangeCalendar
-		bind:value={dateValues}
-		on:click={getCalenderIncome}
-		class="mb-5 rounded-md border shadow"
-	/>
-	<Button on:click={exportToExcel}>Download Excel</Button>
-</div>
+{#if $navigating}
+	<div class="flex h-full w-full items-center justify-center">
+		<Jumper size="80" color="#000000" unit="px" duration="1s" />
+	</div>
+{:else}
+	<div class="flex h-full flex-col items-center justify-center">
+		<RangeCalendar
+			bind:value={dateValues}
+			on:click={getCalenderIncome}
+			class="mb-5 rounded-md border shadow"
+		/>
+		<Button on:click={exportToExcel}>Download Excel</Button>
+	</div>
+{/if}
 <Navbar />
