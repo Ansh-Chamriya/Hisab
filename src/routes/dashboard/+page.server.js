@@ -42,18 +42,18 @@ export const load = async (event) => {
 	] = await Promise.all([
 		supabase
 			.from('income')
-			.select('article,price,qty,time,date')
+			.select('article,price,qty,time,date,income_id')
 			.eq('user_id', userSession.user.id)
 			.eq('date', dayjs.tz(d, 'Asia/Kolkata').format()),
 		supabase
 			.from('income')
-			.select('article,price,qty,date,time')
+			.select('article,price,qty,date,time,income_id')
 			.eq('user_id', userSession.user.id)
 			.gte('date', weekDate)
 			.lte('date', dayjs.tz(d, 'Asia/Kolkata').format()),
 		supabase
 			.from('income')
-			.select('article,price,qty,date,time')
+			.select('article,price,qty,date,time,income_id')
 			.eq('user_id', userSession.user.id)
 			.gte('date', monthDate)
 			.lte('date', dayjs.tz(d, 'Asia/Kolkata').format()),
@@ -103,104 +103,6 @@ export const load = async (event) => {
 			edate: dayjs.tz(d, 'Asia/Kolkata').format()
 		})
 	]);
-	// fetching daily Income data
-
-	// const { data: todayIData } = await supabase
-	// 	.from('income')
-	// 	.select('article,price,qty,time,date')
-	// 	.eq('user_id', userSession.user.id)
-	// 	.eq('date', dayjs().utc().local().format());
-	// fetching weekly data
-
-	// const { data: weekIData } = await supabase
-	// 	.from('income')
-	// 	.select('article,price,qty,date,time')
-	// 	.eq('user_id', userSession.user.id)
-	// 	.gte('date', weekDate)
-	// 	.lte('date', dayjs().utc().local().format());
-
-	// fetching monthly data
-
-	// const { data: monthIData } = await supabase
-	// 	.from('income')
-	// 	.select('article,price,qty,date,time')
-	// 	.eq('user_id', userSession.user.id)
-	// 	.gte('date', monthDate)
-	// 	.lte('date', dayjs().utc().local().format());
-
-	// fetching total daily income
-
-	// const { data: daytotalIncome } = await supabase.rpc('calculate_daily_total', {
-	// 	p_user_id: userSession.user.id,
-	// 	todaydate: dayjs().utc().local().format()
-	// });
-
-	// fetching total weekly income
-
-	// const { data: weekTotalIncome } = await supabase.rpc('calculate_weekly_total', {
-	// 	u_user_id: userSession.user.id,
-	// 	sdate: weekDate,
-	// 	edate: dayjs().utc().local().format()
-	// });
-
-	// fetching total monthly income
-
-	// const { data: monthTotalIncome, error } = await supabase.rpc('calculate_monthly_total', {
-	// 	u_user_id: userSession.user.id,
-	// 	sdate: monthDate,
-	// 	edate: dayjs().utc().local().format()
-	// });
-
-	// Expense section
-
-	// fetching daily Income data
-
-	// const { data: todayEData } = await supabase
-	// 	.from('expense')
-	// 	.select('article,price,qty,time')
-	// 	.eq('user_id', userSession.user.id)
-	// 	.eq('date', dayjs().utc().local().format());
-
-	// fetching weekly data
-
-	// const { data: weekEData } = await supabase
-	// 	.from('expense')
-	// 	.select('article,price,qty,date,time')
-	// 	.eq('user_id', userSession.user.id)
-	// 	.gte('date', weekDate)
-	// 	.lte('date', dayjs().utc().local().format());
-
-	// fetching monthly data
-
-	// const { data: monthEData } = await supabase
-	// 	.from('expense')
-	// 	.select('article,price,qty,date,time')
-	// 	.eq('user_id', userSession.user.id)
-	// 	.gte('date', monthDate)
-	// 	.lte('date', dayjs().utc().local().format());
-
-	// Fetching daily total expense
-
-	// const { data: daytotalExpense } = await supabase.rpc('calculate_daily_total_expense', {
-	// 	p_user_id: userSession.user.id,
-	// 	todaydate: dayjs().utc().local().format()
-	// });
-
-	// fetching total weekly expense
-
-	// const { data: weekTotalExpense } = await supabase.rpc('calculate_weekly_total_expense', {
-	// 	u_user_id: userSession.user.id,
-	// 	sdate: weekDate,
-	// 	edate: dayjs().utc().local().format()
-	// });
-
-	// fetching total monthly income
-
-	// const { data: monthTotalExpense } = await supabase.rpc('calculate_monthly_total_expense', {
-	// 	u_user_id: userSession.user.id,
-	// 	sdate: monthDate,
-	// 	edate: dayjs().utc().local().format()
-	// });
 
 	return {
 		user_id: userSession.user.id,
@@ -217,4 +119,18 @@ export const load = async (event) => {
 		weekTotalExpense: weekTotalExpense ? weekTotalExpense : 0,
 		monthTotalExpense: monthTotalExpense ? monthTotalExpense : 0
 	};
+};
+export const actions = {
+	update: async (event) => {
+		const formData = await event.request.formData();
+		const newPrice = formData.get('updatePrice');
+		const newQty = formData.get('articleQty');
+		const incomeId = formData.get('incomeId');
+		const { data, error } = await supabase
+			.from('income')
+			.update({ price: newPrice, qty: newQty })
+			.eq('income_id', incomeId)
+			.select();
+		console.log(data, error);
+	}
 };

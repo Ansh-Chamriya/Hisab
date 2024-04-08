@@ -91,22 +91,6 @@
 				</div>
 				<div class="my-4">
 					<Label for="price">Price</Label>
-					<!-- <select name="price{i}" id="price" bind:value={value.price}>
-					{#if values[i].article == 'Idli-khiru'}
-						{#each idliPrices as idliPrice}
-							<option value={idliPrice}>{idliPrice}</option>
-						{/each}
-					{:else if values[i].article == 'Chutney'}
-						{#each chutneyPrices as chutneyPrice}
-							<option value={chutneyPrice}>{chutneyPrice}</option>
-						{/each}
-					{:else if values[i].article == 'Menduvada-khiru'}
-						{#each MenduvadaPrices as MenduvadaPrice}
-							<option value={MenduvadaPrice}>{MenduvadaPrice}</option>
-						{/each}
-					{/if}
-				</select> -->
-
 					<Select.Root>
 						<Select.Trigger
 							class="w-full bg-slate-50"
