@@ -126,6 +126,7 @@ export const actions = {
 		const newPrice = formData.get('updatePrice');
 		const newQty = formData.get('articleQty');
 		const incomeId = formData.get('incomeId');
+		console.log('updated price and qty', newPrice, newQty);
 		const { data, error } = await supabase
 			.from('income')
 			.update({ price: newPrice, qty: newQty })
