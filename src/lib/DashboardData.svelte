@@ -57,7 +57,7 @@
 				</Dialog.Header>
 				<div class="grid gap-4 py-4">
 					<form action="?/update" method="post">
-						<div class="grid grid-cols-4 items-center gap-4">
+						<div class="mb-4 grid grid-cols-4 items-center gap-4">
 							<Label for="articlePrice" class="text-right">Price</Label>
 							<input type="hidden" name="incomeId" value={Data.income_id} />
 							<Select.Root>
@@ -85,9 +85,15 @@
 								<Select.Input name="updatePrice" />
 							</Select.Root>
 						</div>
-						<div class="grid grid-cols-4 items-center gap-4">
+						<div class="mb-4 grid grid-cols-4 items-center gap-4">
 							<Label for="articleQty" class="text-right">Quantity</Label>
-							<Input id="articleQty" type="number" value={Data.qty} class="col-span-3" />
+							<Input
+								id="articleQty"
+								name="articleQty"
+								type="number"
+								value={Data.qty}
+								class="col-span-3"
+							/>
 						</div>
 						<Dialog.Footer>
 							<Button type="submit">Save changes</Button>
