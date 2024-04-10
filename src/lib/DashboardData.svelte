@@ -23,7 +23,7 @@
 <div class=" mt-4 font-bold text-slate-600">
 	<span class="mb-6 ml-5">Today, {date}</span>
 	{#each Datas as Data}
-		<div class="m-4">
+		<div class="mx-4 my-2">
 			<Dialog.Root>
 				<Dialog.Trigger>
 					<div
