@@ -73,18 +73,18 @@ export const load = async (event) => {
 		}),
 		supabase
 			.from('expense')
-			.select('article,price,qty,time')
+			.select('article,price,qty,time,expense_id')
 			.eq('user_id', userSession.user.id)
 			.eq('date', dayjs.tz(d, 'Asia/Kolkata').format()),
 		supabase
 			.from('expense')
-			.select('article,price,qty,date,time')
+			.select('article,price,qty,date,time,expense_id')
 			.eq('user_id', userSession.user.id)
 			.gte('date', weekDate)
 			.lte('date', dayjs.tz(d, 'Asia/Kolkata').format()),
 		supabase
 			.from('expense')
-			.select('article,price,qty,date,time')
+			.select('article,price,qty,date,time,expense_id')
 			.eq('user_id', userSession.user.id)
 			.gte('date', monthDate)
 			.lte('date', dayjs.tz(d, 'Asia/Kolkata').format()),

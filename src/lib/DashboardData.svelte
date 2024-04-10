@@ -48,7 +48,7 @@
 					>
 				</div></Dialog.Trigger
 			>
-			<Dialog.Content class="sm:max-w-[425px]">
+			<Dialog.Content class="m-4 sm:max-w-[425px]">
 				<Dialog.Header>
 					<Dialog.Title>Edit Income</Dialog.Title>
 					<Dialog.Description>
