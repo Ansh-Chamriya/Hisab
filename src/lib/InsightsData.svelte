@@ -29,7 +29,7 @@
 				<Avatar.Fallback class="font-bold">{Insight.name.slice(0, 1)}</Avatar.Fallback>
 			</Avatar.Root>
 			<p class="absolute left-14 top-1 text-lg font-bold">{Insight.name}</p>
-			<span class="right absolute right-2 top-[2.6rem]">{Insight.insight}%</span>
+			<span class="right absolute right-[0.45rem] top-[2.6rem]">{Insight.insight}%</span>
 			<span class="absolute right-3 top-2">{INRCurrency(Insight.articleTotal)}</span>
 			<Progress value={values[i]} class="mt-3 w-[80%]" />
 			<Separator class="my-5" />
