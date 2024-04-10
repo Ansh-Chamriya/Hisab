@@ -9,6 +9,7 @@
 	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { Label } from '$lib/components/ui/label/index.js';
+	import { not } from 'drizzle-orm';
 	const date = new Date().toString().slice(0, 10);
 	export let Datas;
 	let isLoading = true;
@@ -49,7 +50,7 @@
 						>
 					</div></Dialog.Trigger
 				>
-				<Dialog.Content class="m-4 sm:max-w-[425px]">
+				<Dialog.Content class="sm:max-w-[425px]">
 					<Dialog.Header>
 						<Dialog.Title>Edit Income</Dialog.Title>
 						<Dialog.Description>
@@ -61,30 +62,40 @@
 							<div class="mb-4 grid grid-cols-4 items-center gap-4">
 								<Label for="articlePrice" class="text-right">Price</Label>
 								<input type="hidden" name="incomeId" value={Data.income_id} />
-								<Select.Root>
-									<Select.Trigger class="w-full bg-slate-50" name="updatePrice" id="articlePrice">
-										<Select.Value />
-									</Select.Trigger>
-									<Select.Content class="bg-slate-50">
-										<Select.Group>
-											<Select.Label>Price</Select.Label>
-											{#if Data.article == 'Idli-khiru'}
-												{#each idliPrices as idliPrice}
-													<Select.Item value={idliPrice}>{idliPrice}</Select.Item>
-												{/each}
-											{:else if Data.article == 'Chutney'}
-												{#each chutneyPrices as chutneyPrice}
-													<Select.Item value={chutneyPrice}>{chutneyPrice}</Select.Item>
-												{/each}
-											{:else if Data.article == 'Menduvada-khiru'}
-												{#each MenduvadaPrices as MenduvadaPrice}
-													<Select.Item value={MenduvadaPrice}>{MenduvadaPrice}</Select.Item>
-												{/each}
-											{/if}
-										</Select.Group>
-									</Select.Content>
-									<Select.Input name="updatePrice" />
-								</Select.Root>
+								{#if Data.article in ['Idli-khiru', 'Chutney', 'Menduvada-khiru']}
+									<Select.Root>
+										<Select.Trigger class="w-full bg-slate-50" name="updatePrice" id="articlePrice">
+											<Select.Value />
+										</Select.Trigger>
+										<Select.Content class="bg-slate-50">
+											<Select.Group>
+												<Select.Label>Price</Select.Label>
+												{#if Data.article == 'Idli-khiru'}
+													{#each idliPrices as idliPrice}
+														<Select.Item value={idliPrice}>{idliPrice}</Select.Item>
+													{/each}
+												{:else if Data.article == 'Chutney'}
+													{#each chutneyPrices as chutneyPrice}
+														<Select.Item value={chutneyPrice}>{chutneyPrice}</Select.Item>
+													{/each}
+												{:else if Data.article == 'Menduvada-khiru'}
+													{#each MenduvadaPrices as MenduvadaPrice}
+														<Select.Item value={MenduvadaPrice}>{MenduvadaPrice}</Select.Item>
+													{/each}
+												{/if}
+											</Select.Group>
+										</Select.Content>
+										<Select.Input name="updatePrice" />
+									</Select.Root>
+								{:else}
+									<Input
+										id="articlePrice"
+										name="updatePrice"
+										type="number"
+										value={Data.price}
+										class="col-span-4"
+									/>
+								{/if}
 							</div>
 							<div class="mb-4 grid grid-cols-4 items-center gap-4">
 								<Label for="articleQty" class="text-right">Quantity</Label>
