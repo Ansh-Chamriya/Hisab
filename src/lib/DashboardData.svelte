@@ -62,7 +62,7 @@
 							<div class="mb-4 grid grid-cols-4 items-center gap-4">
 								<Label for="articlePrice" class="text-right">Price</Label>
 								<input type="hidden" name="incomeId" value={Data.income_id} />
-								{#if Data.article in ['Idli-khiru', 'Chutney', 'Menduvada-khiru']}
+								{#if Data.article == 'Idli-khiru' || Data.article == 'Chutney' || Data.article == 'Menduvada-khiru'}
 									<Select.Root>
 										<Select.Trigger class="w-full bg-slate-50" name="updatePrice" id="articlePrice">
 											<Select.Value />
