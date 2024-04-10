@@ -140,24 +140,24 @@
 		<Button
 			variant={active_tab === 'today' ? 'default' : 'secondary'}
 			on:click={() => (active_tab = 'today')}
-			class="rounded-3xl"
+			class="rounded-3xl px-3"
 			autofocus>Today</Button
 		>
 		<Button
 			variant={active_tab === 'thisweek' ? 'default' : 'secondary'}
-			class="rounded-3xl"
+			class="rounded-3xl px-3"
 			on:click={() => (active_tab = 'thisweek')}>This week</Button
 		>
 		<Button
 			variant={active_tab === 'thismonth' ? 'default' : 'secondary'}
-			class="rounded-3xl"
+			class="rounded-3xl px-3"
 			on:click={() => (active_tab = 'thismonth')}>This month</Button
 		>
 		<Popover.Root openFocus>
 			<Popover.Trigger asChild let:builder>
 				<Button
 					variant={active_tab === 'calender' ? 'default' : 'secondary'}
-					class="rounded-3xl"
+					class="rounded-3xl px-3"
 					builders={[builder]}
 					on:click={() => (active_tab = 'calender')}>Calender</Button
 				>
