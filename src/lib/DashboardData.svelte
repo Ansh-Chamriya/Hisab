@@ -1,6 +1,5 @@
 <script>
 	import * as Avatar from '$lib/components/ui/avatar';
-	import { Skeleton } from '$lib/components/ui/skeleton';
 	import dayjs from 'dayjs';
 	import { onMount } from 'svelte';
 	import * as Select from '$lib/components/ui/select/index.js';
@@ -63,7 +62,11 @@
 						<form action="?/update" method="post">
 							<div class="mb-4 grid grid-cols-4 items-center gap-4">
 								<Label for="articlePrice" class="text-right">Price</Label>
-								<input type="hidden" name="incomeId" value={Data.income_id} />
+								<input
+									type="hidden"
+									name="incomeId"
+									value={Data.income_id ? Data.income_id : Data.expense_id}
+								/>
 								{#if Data.article == 'Idli-khiru' || Data.article == 'Chutney' || Data.article == 'Menduvada-khiru'}
 									<Select.Root>
 										<Select.Trigger class="w-full bg-slate-50" name="updatePrice" id="articlePrice">

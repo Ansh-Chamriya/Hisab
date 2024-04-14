@@ -132,6 +132,11 @@ export const actions = {
 			.update({ price: newPrice, qty: newQty })
 			.eq('income_id', incomeId)
 			.select();
+		const { data: updatedExpense } = await supabase
+			.from('expense')
+			.update({ price: newPrice, qty: newQty })
+			.eq('expense_id', incomeId)
+			.select();
 		console.log(data, error);
 	}
 };
