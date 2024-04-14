@@ -10,7 +10,7 @@ export const load = async (event) => {
 
 	const d = dayjs().utc().local();
 	const userSession = await event.locals.getSession();
-	const wd = dayjs().startOf('w').add(1, 'day').utc().local();
+	const wd = dayjs().startOf('w').utc().local();
 	const md = dayjs().startOf('M').utc().local();
 	const weekDate = dayjs.tz(wd, 'Asia/Kolkata').format();
 	const monthDate = dayjs.tz(md, 'Asia/Kolkata').format();
