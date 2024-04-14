@@ -4,18 +4,20 @@
 	import dayjs from 'dayjs';
 	import { onMount } from 'svelte';
 	import * as Select from '$lib/components/ui/select/index.js';
-
+	import toast, { Toaster } from 'svelte-french-toast';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { Label } from '$lib/components/ui/label/index.js';
-	import { not } from 'drizzle-orm';
 	const date = new Date().toString().slice(0, 10);
 	export let Datas;
 	let isLoading = true;
 	onMount(() => {
 		isLoading = false;
 	});
+	function handleClick() {
+		toast.success('Data Added Succesfully');
+	}
 	const idliPrices = [50, 30, 40];
 	const chutneyPrices = [10, 20];
 	const MenduvadaPrices = [70, 140];
@@ -108,7 +110,7 @@
 								/>
 							</div>
 							<Dialog.Footer>
-								<Button type="submit">Save changes</Button>
+								<Button type="submit" on:click={handleClick}>Save changes</Button>
 							</Dialog.Footer>
 						</form>
 					</div>
