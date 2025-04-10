@@ -45,7 +45,8 @@ export const load = async (event) => {
 			.select('article,price,qty,time,date,income_id')
 			.eq('user_id', userSession.user.id)
 			.eq('date', dayjs.tz(d, 'Asia/Kolkata').format())
-			.order('date', { ascending: false }),
+			.order('date', { ascending: false })
+			.order('time', { ascending: false }),
 		,
 		supabase
 			.from('income')
@@ -53,14 +54,17 @@ export const load = async (event) => {
 			.eq('user_id', userSession.user.id)
 			.gte('date', weekDate)
 			.lte('date', dayjs.tz(d, 'Asia/Kolkata').format())
-			.order('date', { ascending: false }),
+			.order('date', { ascending: false })
+			.order('time', { ascending: false }),
+		,
 		supabase
 			.from('income')
 			.select('article,price,qty,date,time,income_id')
 			.eq('user_id', userSession.user.id)
 			.gte('date', monthDate)
 			.lte('date', dayjs.tz(d, 'Asia/Kolkata').format())
-			.order('date', { ascending: false }),
+			.order('date', { ascending: false })
+			.order('time', { ascending: false }),
 		,
 		supabase.rpc('calculate_daily_total', {
 			p_user_id: userSession.user.id,
