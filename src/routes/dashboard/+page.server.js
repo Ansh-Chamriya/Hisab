@@ -46,7 +46,7 @@ export const load = async (event) => {
 			.eq('user_id', userSession.user.id)
 			.eq('date', dayjs.tz(d, 'Asia/Kolkata').format())
 			.order('date', { ascending: true })
-			.order('time', { ascending: false }),
+			.order('time', { ascending: true }),
 		supabase
 			.from('income')
 			.select('article,price,qty,date,time,income_id')
@@ -54,7 +54,7 @@ export const load = async (event) => {
 			.gte('date', weekDate)
 			.lte('date', dayjs.tz(d, 'Asia/Kolkata').format())
 			.order('date', { ascending: true })
-			.order('time', { ascending: false }),
+			.order('time', { ascending: true }),
 		supabase
 			.from('income')
 			.select('article,price,qty,date,time,income_id')
@@ -62,7 +62,7 @@ export const load = async (event) => {
 			.gte('date', monthDate)
 			.lte('date', dayjs.tz(d, 'Asia/Kolkata').format())
 			.order('date', { ascending: true })
-			.order('time', { ascending: false }),
+			.order('time', { ascending: true }),
 		supabase.rpc('calculate_daily_total', {
 			p_user_id: userSession.user.id,
 			todaydate: dayjs.tz(d, 'Asia/Kolkata').format()
